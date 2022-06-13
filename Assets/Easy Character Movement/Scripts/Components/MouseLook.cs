@@ -205,8 +205,9 @@ namespace ECM.Components
             }
             else
             {
-                movement.rotation *= yawRotation;
+                movement.rotation *= yawRotation; //Update the cameraTransform instead
                 cameraTransform.localRotation *= pitchRotation;
+                //cameraTransform.localRotation *= yawRotation;
 
                 if (clampPitch)
                     cameraTransform.localRotation = ClampPitch(cameraTransform.localRotation);
@@ -214,6 +215,51 @@ namespace ECM.Components
 
             UpdateCursorLock();
         }
+
+        public virtual void MoveRotation(CharacterMovement movement, Transform cameraTransform)
+        {
+            var yaw = Input.GetAxis("Mouse X") * lateralSensitivity;
+            var pitch = Input.GetAxis("Mouse Y") * verticalSensitivity;
+
+            var yawRotation = Quaternion.Euler(0.0f, yaw, 0.0f);
+            var pitchRotation = Quaternion.Euler(-pitch, 0.0f, 0.0f);
+
+            characterTargetRotation *= yawRotation;
+
+            cameraTargetRotation *= pitchRotation;
+
+            if (clampPitch)
+                cameraTargetRotation = ClampPitch(cameraTargetRotation);
+
+            if (smooth)
+            {
+                // On a rotating platform, append platform rotation to target rotation
+
+                if (movement.platformUpdatesRotation && movement.isOnPlatform && movement.platformAngularVelocity != Vector3.zero)
+                {
+                    characterTargetRotation *=
+                        Quaternion.Euler(movement.platformAngularVelocity * Mathf.Rad2Deg * Time.deltaTime);
+                }
+
+                movement.rotation = Quaternion.Slerp(movement.rotation, characterTargetRotation,
+                    smoothTime * Time.deltaTime);
+
+                cameraTransform.localRotation = Quaternion.Slerp(cameraTransform.localRotation, cameraTargetRotation,
+                    smoothTime * Time.deltaTime);
+            }
+            else
+            {
+                movement.rotation *= yawRotation; //Update the cameraTransform instead
+                cameraTransform.localRotation *= pitchRotation;
+                
+
+                if (clampPitch)
+                    cameraTransform.localRotation = ClampPitch(cameraTransform.localRotation);
+            }
+
+            UpdateCursorLock();
+        }
+
 
         public virtual void SetCursorLock(bool value)
         {
