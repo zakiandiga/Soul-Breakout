@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using Cinemachine;
 
@@ -23,8 +24,7 @@ namespace ECM.Controllers
 
         [Tooltip("Speed multiplier while running.")]
         [SerializeField]
-        private float _runSpeedMultiplier = 2.0f;
-
+        private float _runSpeedMultiplier = 2.0f;        
         #endregion
 
         #region PROPERTIES
@@ -93,6 +93,18 @@ namespace ECM.Controllers
 
         public bool run { get; set; }
 
+        public bool IsPossessing { get; private set; }
+
+
+
+
+        private bool possess = false;
+
+
+        #endregion
+
+        #region EVENTS
+        public event Action<bool> OnPossessPressed;
         #endregion
 
         #region METHODS
@@ -207,6 +219,13 @@ namespace ECM.Controllers
             jump = Input.GetButton("Jump");
 
             crouch = Input.GetKey(KeyCode.C);
+
+            possess = Input.GetKey(KeyCode.E);
+        }
+
+        private void Possess()
+        {
+            OnPossessPressed?.Invoke(possess);
         }
 
         #endregion
@@ -272,6 +291,31 @@ namespace ECM.Controllers
             {
                 cameraTransform = cam.transform;
                 mouseLook.Init(transform, cameraTransform);
+            }
+        }
+
+        private void OnDisable()
+        {
+            if(IsPossessing)
+                IsPossessing = false;
+        }
+
+        public override void Update()
+        {
+            base.Update();
+
+            if (!IsPossessing)
+            {
+                if (possess)
+                {
+                    IsPossessing = true;
+                    Possess();
+                }
+            }
+
+            if (IsPossessing && !possess)
+            {
+                IsPossessing = false;
             }
         }
 
