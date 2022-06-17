@@ -32303,14 +32303,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7887396809286111371, guid: 22de371135fb77542badff218da71113, type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7887396809286111372, guid: 22de371135fb77542badff218da71113, type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 7887396809286111379, guid: 22de371135fb77542badff218da71113, type: 3}
       propertyPath: m_Name
       value: KnightBlack
