@@ -26,6 +26,8 @@ public class PosessionRaycast : MonoBehaviour
 
     private bool isPossessing = false;
 
+    public ParticleSystem Laser;
+
 
     private void Start()
     {
@@ -55,8 +57,9 @@ public class PosessionRaycast : MonoBehaviour
         if (!possessPressed)
             return;
 
-        var ray = cam.ScreenPointToRay(new Vector3(Screen.width / 2f, Screen.height / 2f, 0f));
+        var ray = cam.ScreenPointToRay(new Vector3(Screen.width / 2f, Screen.height / 2f, 0f));  //crosshair
         Debug.DrawRay(ray.origin, ray.direction * 500, Color.red);
+
         RaycastHit hit;
         if (Physics.Raycast(ray, out hit))
         {
@@ -66,8 +69,13 @@ public class PosessionRaycast : MonoBehaviour
                 isPossessing = true;
                 if (targetPossess.TryGetComponent(out FirstPersonCinemachine targetPossessControl))
                 {
+
                     targetControl = targetPossessControl;
-                    Possess();
+                   // CinemachineBlendMonitor.OnCameraBlendStarted += PosessParticleFXStart;
+                    //Possess();
+                     CinemachineBlendMonitor c=null;
+                     PosessParticleFXStart(c);
+                    Invoke("Possess",1.0f);
                 }
 
                 else
@@ -113,9 +121,22 @@ public class PosessionRaycast : MonoBehaviour
         }
     }
 
+    void PosessParticleFXStart(CinemachineBlendMonitor c)
+    {
+        Laser.Play();
+        CinemachineBlendMonitor.OnCameraBlendStarted -= PosessParticleFXStart;
+    }
+
+     void PosessParticleFXStop(CinemachineBlendMonitor c)
+    {
+         Laser.Stop();
+        CinemachineBlendMonitor.OnCameraBlendFinished -= PosessParticleFXStop;
+    }
+
     private void Possess()
     {
         CinemachineBlendMonitor.OnCameraBlendFinished += FinalizePossess;
+
         control.enabled = false;
         targetVirtualCamera = targetPossess.GetComponentInChildren<CinemachineVirtualCamera>();
         targetPossessionRaycast = targetPossess.GetComponent<PosessionRaycast>();
@@ -134,6 +155,7 @@ public class PosessionRaycast : MonoBehaviour
     private void FinalizePossess(CinemachineBlendMonitor c)
     {
         CinemachineBlendMonitor.OnCameraBlendFinished -= FinalizePossess;
+        CinemachineBlendMonitor.OnCameraBlendFinished += PosessParticleFXStop;
 
         targetVirtualCamera.transform.rotation = targetVirtualCamera.transform.parent.rotation;
 
@@ -143,5 +165,6 @@ public class PosessionRaycast : MonoBehaviour
         isPossessing = false;
         this.enabled = false;
     }
+
 
 }

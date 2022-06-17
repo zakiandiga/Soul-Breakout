@@ -220,7 +220,7 @@ namespace ECM.Controllers
 
             crouch = Input.GetKey(KeyCode.C);
 
-            possess = Input.GetKey(KeyCode.E);
+            possess = Input.GetKeyDown(KeyCode.E);
         }
 
         private void Possess()
