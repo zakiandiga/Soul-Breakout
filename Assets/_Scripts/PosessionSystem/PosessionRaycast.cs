@@ -67,8 +67,6 @@ public class PosessionRaycast : MonoBehaviour
                 if (targetPossess.TryGetComponent(out FirstPersonCinemachine targetPossessControl))
                 {
                     targetControl = targetPossessControl;
-
-                    Debug.Log(transform.root.name + ": Can possess " + targetControl.transform.root + " the target, now possessing!");
                     Possess();
                 }
 
@@ -126,6 +124,7 @@ public class PosessionRaycast : MonoBehaviour
 
         if (targetVirtualCamera != null)
         {
+            targetVirtualCamera.transform.rotation = currentVirtualCamera.transform.rotation;
             currentVirtualCamera.Priority = 1;
             targetVirtualCamera.Priority = 10;
         }
@@ -136,7 +135,7 @@ public class PosessionRaycast : MonoBehaviour
     {
         CinemachineBlendMonitor.OnCameraBlendFinished -= FinalizePossess;
 
-        Debug.Log("Finish possessing");
+        targetVirtualCamera.transform.rotation = targetVirtualCamera.transform.parent.rotation;
 
         targetControl.enabled = true;
         targetPossessionRaycast.enabled = true;
