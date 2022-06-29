@@ -16675,6 +16675,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SoldierBlue
       objectReference: {fileID: 0}
+    - target: {fileID: 7887396809478835668, guid: ab7fac8599ca46143b365d226054e6df, type: 3}
+      propertyPath: m_Priority
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ab7fac8599ca46143b365d226054e6df, type: 3}
 --- !u!4 &866556050 stripped
@@ -31180,6 +31184,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5064723584602585763, guid: e4f703eba0f0aa24c81500658d97f69a, type: 3}
+      propertyPath: Laser
+      value: 
+      objectReference: {fileID: 1008547461}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e4f703eba0f0aa24c81500658d97f69a, type: 3}
 --- !u!1 &1599331330
@@ -43555,6 +43563,10 @@ PrefabInstance:
     - target: {fileID: 7887396809286111379, guid: bd91880b6a9ecd54799ba5f175f4a0f9, type: 3}
       propertyPath: m_Name
       value: InitialCharacter
+      objectReference: {fileID: 0}
+    - target: {fileID: 7887396809478835668, guid: bd91880b6a9ecd54799ba5f175f4a0f9, type: 3}
+      propertyPath: m_Priority
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bd91880b6a9ecd54799ba5f175f4a0f9, type: 3}
