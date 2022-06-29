@@ -11,6 +11,16 @@ public class Interactable : MonoBehaviour
 
     protected bool canInteract = false;
 
+    protected virtual void StartInteract()
+    {
+        Debug.Log(gameObject.name + " START interact with: " + currentInteractingPlayer.name);
+    }
+
+    protected virtual void StopInteract()
+    {
+        Debug.Log(gameObject.name + " STOP interact with: " + currentInteractingPlayer.name);
+    }
+
     protected void OnTriggerEnter(Collider other)
     {        
         if (currentInteractingPlayer == null)
@@ -86,8 +96,10 @@ public class Interactable : MonoBehaviour
     {
         if (canInteract)
         {
-            if(currentInteractingPlayer.IsInteracting)
-                Interact();
+            if (currentInteractingPlayer.IsInteracting)
+                StartInteract();
+            else
+                StopInteract();
 
             if(!currentInteractingPlayer.enabled)
             {
@@ -101,8 +113,5 @@ public class Interactable : MonoBehaviour
         }
     }
 
-    protected virtual void Interact()
-    {
-        Debug.Log(gameObject.name + " interact with: " + currentInteractingPlayer.name);
-    }
+
 }
