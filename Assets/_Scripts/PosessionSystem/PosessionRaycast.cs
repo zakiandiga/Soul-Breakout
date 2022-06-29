@@ -28,6 +28,9 @@ public class PosessionRaycast : MonoBehaviour
 
     public ParticleSystem Laser;
 
+    [SerializeField] private float possessRange = 500f;
+    [SerializeField] private LayerMask possessingRaycastLayer;
+
 
     private void Start()
     {
@@ -61,7 +64,7 @@ public class PosessionRaycast : MonoBehaviour
         Debug.DrawRay(ray.origin, ray.direction * 500, Color.red);
 
         RaycastHit hit;
-        if (Physics.Raycast(ray, out hit))
+        if (Physics.Raycast(ray, out hit, possessRange, possessingRaycastLayer))
         {
             if(!isPossessing)
             {

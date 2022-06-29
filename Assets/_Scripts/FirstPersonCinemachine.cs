@@ -95,12 +95,10 @@ namespace ECM.Controllers
 
         public bool IsPossessing { get; private set; }
 
-
-
+        public bool IsInteracting { get; private set; }
 
         private bool possess = false;
-
-
+        private bool interact = false;
         #endregion
 
         #region EVENTS
@@ -108,6 +106,28 @@ namespace ECM.Controllers
         #endregion
 
         #region METHODS
+
+        protected override void Animate()
+        {
+            if (animator == null)
+                return;
+
+            if(moveDirection != Vector3.zero)
+            {
+                if(!animator.GetBool("IsRunning"))
+                {
+                    animator.SetBool("IsRunning", true);
+                }
+
+            }
+            else
+            {
+                if (animator.GetBool("IsRunning"))
+                {
+                    animator.SetBool("IsRunning", false);
+                }
+            }
+        }
 
         /// <summary>
         /// Use this method to animate camera.
@@ -221,6 +241,8 @@ namespace ECM.Controllers
             crouch = Input.GetKey(KeyCode.C);
 
             possess = Input.GetKeyDown(KeyCode.E);
+
+            interact = Input.GetKey(KeyCode.T); 
         }
 
         private void Possess()
@@ -316,6 +338,18 @@ namespace ECM.Controllers
             if (IsPossessing && !possess)
             {
                 IsPossessing = false;
+            }
+
+            if(!IsInteracting)
+            {
+                if(interact)
+                {
+                    IsInteracting = true;
+                }
+            }
+            if(IsInteracting && !interact)
+            {
+                IsInteracting = false;
             }
         }
 
