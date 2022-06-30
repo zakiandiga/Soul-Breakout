@@ -1,6 +1,8 @@
 using System;
 using UnityEngine;
-using UnityEngine.Rendering.PostProcessing;
+//using UnityEngine.Rendering.PostProcessing;
+using UnityEngine.Rendering;
+using UnityEngine.Rendering.Universal;
 using Cinemachine;
 
 //put this on the main camera with the CinemachineBrain
@@ -11,21 +13,31 @@ public class CinemachineBlendMonitor : MonoBehaviour
     public static event Action<CinemachineBlendMonitor> OnCameraBlendFinished;
 
     private CinemachineBrain cinemachineBrain;
-    [SerializeField] private PostProcessVolume postPro;
-    private ColorGrading colorGrading;
+    //[SerializeField] private PostProcessVolume postPro;
+    //private ColorGrading colorGrading;
+    [SerializeField] private Volume uPostPro;
+    private VolumeProfile volumeProfile;
+    private ColorAdjustments colorAdjustment;
+    private ChromaticAberration chroma;
+   
 
     private bool blendingOnProgress = false;
 
     private float smoothToTime = 0.3f;
     private float smoothFromTime = 0.12f;
     private float smoothRef;
-    private float currentSmoothValue;
+    private float currentSaturationSmoothValue;
 
     // Start is called before the first frame update
     void Start()
     {
         cinemachineBrain = GetComponent<CinemachineBrain>();
-        postPro.profile.TryGetSettings(out colorGrading);
+        //postPro.profile.TryGetSettings(out colorGrading);
+        //uPostPro.TryGetComponent(out colorAdjustment);
+        volumeProfile = uPostPro.profile;
+        volumeProfile.TryGet(out colorAdjustment);
+        volumeProfile.TryGet(out chroma);
+
 
     }
 
@@ -52,18 +64,28 @@ public class CinemachineBlendMonitor : MonoBehaviour
 
         if(blendingOnProgress)
         {
-            if(colorGrading.saturation.value != -80f)
+            currentSaturationSmoothValue = colorAdjustment.saturation.value;
+            chroma.intensity.value = 1;
+
+            if(currentSaturationSmoothValue != -80f)
             {
-                colorGrading.saturation.value = Mathf.SmoothDamp(colorGrading.saturation.value, -80, ref smoothRef, smoothToTime);
+                currentSaturationSmoothValue = Mathf.SmoothDamp(colorAdjustment.saturation.value, -80, ref smoothRef, smoothToTime);
+                colorAdjustment.saturation.value = currentSaturationSmoothValue;
             }
         }
         else if(!blendingOnProgress)
         {
-            if(colorGrading.saturation.value != 0)
+            currentSaturationSmoothValue = colorAdjustment.saturation.value;
+            chroma.intensity.value = 0;
+
+            if (currentSaturationSmoothValue != 0)
             {
-                colorGrading.saturation.value = Mathf.SmoothDamp(colorGrading.saturation.value, 0, ref smoothRef, smoothFromTime);
-                if (Mathf.Abs(colorGrading.saturation.value) < 0.1f)
-                    colorGrading.saturation.value = 0;
+                currentSaturationSmoothValue = Mathf.SmoothDamp(colorAdjustment.saturation.value, 0, ref smoothRef, smoothFromTime);
+                if (Mathf.Abs(currentSaturationSmoothValue) < 0.1f)
+                    currentSaturationSmoothValue = 0;
+
+                colorAdjustment.saturation.value = currentSaturationSmoothValue;
+                //colorAdjustment.saturation.Override()
             }
         }
     }
