@@ -47,6 +47,9 @@ public class ProgressBar : MonoBehaviour
         {
             if (text.gameObject.activeSelf)
                 text.gameObject.SetActive(false);
+
+            if (slider.gameObject.activeSelf)
+                slider.gameObject.SetActive(false);
         }
 
 

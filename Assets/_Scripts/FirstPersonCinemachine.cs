@@ -226,21 +226,24 @@ namespace ECM.Controllers
                 pause = !pause;
 
             // Player input
-
-            moveDirection = new Vector3
+            if(!interact)
             {
-                x = Input.GetAxisRaw("Horizontal"),
-                y = 0.0f,
-                z = Input.GetAxisRaw("Vertical")
-            };
+                moveDirection = new Vector3
+                {
+                    x = Input.GetAxisRaw("Horizontal"),
+                    y = 0.0f,
+                    z = Input.GetAxisRaw("Vertical")
+                };
 
-            run = Input.GetButton("Fire3");
+                run = Input.GetButton("Fire3");
 
-            jump = Input.GetButton("Jump");
+                jump = Input.GetButton("Jump");
 
-            crouch = Input.GetKey(KeyCode.C);
+                crouch = Input.GetKey(KeyCode.C);
 
-            possess = Input.GetKeyDown(KeyCode.E);
+                possess = Input.GetKeyDown(KeyCode.E);
+
+            }
 
             interact = Input.GetKey(KeyCode.T); 
         }
