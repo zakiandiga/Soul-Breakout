@@ -20,14 +20,15 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: PolyKnights_Character_Mat_Black
-  m_Shader: {fileID: -6465566751694194690, guid: 4369b69e9581a1942a2a796df7dc74d5, type: 3}
+  m_Name: InvisibleDude
+  m_Shader: {fileID: 4800000, guid: 933532a4fcc9baf4fa0491de14d08ed7, type: 3}
   m_ShaderKeywords: 
-  m_LightmapFlags: 2
+  m_LightmapFlags: 6
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
-  stringTagMap: {}
+  m_CustomRenderQueue: 2000
+  stringTagMap:
+    RenderType: Opaque
   disabledShaderPasses: []
   m_SavedProperties:
     serializedVersion: 3
@@ -89,8 +90,6 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
-    - Vector1_abd64758a1a4467eb38eeadd8d35e521: 0.01
-    - Vector1_b314aa728b3d4ed9a9a897a0556ae5bc: 30
     - _AlphaClip: 0
     - _Blend: 0
     - _BumpScale: 1
@@ -121,8 +120,6 @@ Material:
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
-    - Color_b61c9188c9e946f399da570b1bd46dad: {r: 0.2139835, g: 3.495064, b: 4.541205, a: 0}
-    - Vector2_be46f8674b3e4e308db605dca239b764: {r: 0, g: 1, b: 0, a: 0}
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 0}
