@@ -99,6 +99,10 @@ namespace ECM.Controllers
 
         private bool possess = false;
         private bool interact = false;
+
+        public int CharacterCode => characterCode;
+
+        [SerializeField] private int characterCode = 1;
         #endregion
 
         #region EVENTS

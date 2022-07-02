@@ -22,6 +22,7 @@ public class ProgressBar : MonoBehaviour
 
     private void Update()
     {
+
         if(taskFill.IsProgressing)
         {
             if(!text.gameObject.activeSelf)

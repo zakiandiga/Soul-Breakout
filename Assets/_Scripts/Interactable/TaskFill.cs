@@ -9,7 +9,7 @@ public class TaskFill : Interactable
     public bool IsProgressing => isProgressing;
     public bool TaskFinished => taskFinished;
 
-
+    [SerializeField] private int characterCode = 1;
 
     [SerializeField] private float maxProgress = 10f;
     private float currentProgress = 0f;
@@ -19,10 +19,11 @@ public class TaskFill : Interactable
 
     protected override void StartInteract()
     {
+
         if (!isProgressing)
         {
-            isProgressing = true;
-
+            if (currentInteractingPlayer.CharacterCode == characterCode)
+                isProgressing = true;
         }
     }
 
@@ -39,18 +40,42 @@ public class TaskFill : Interactable
         }
     }
 
+    protected override void OnTriggerEnter(Collider other)
+    {
+        if (taskFinished)
+            return;
+
+        base.OnTriggerEnter(other);
+    }
+
+    protected override void OnTriggerStay(Collider other)
+    {
+        if (taskFinished)
+            return;
+
+        base.OnTriggerStay(other);
+    }
+
+    protected override void OnTriggerExit(Collider other)
+    {
+        if (taskFinished)
+            return;
+
+        base.OnTriggerExit(other);
+    }
+
     protected override void Update()
     {
         base.Update();
 
-        if(isProgressing && currentProgress < maxProgress)
+        if(!taskFinished && isProgressing && currentProgress < maxProgress)
         {
             currentProgress += Time.deltaTime;
 
             Debug.Log((int)currentProgress + "/" + maxProgress);
         }
 
-        if (currentProgress >= maxProgress && !taskFinished)
+        if (!taskFinished && currentProgress >= maxProgress)
         {
             Debug.Log("Task Done");
             taskFinished = true;

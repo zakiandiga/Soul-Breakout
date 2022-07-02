@@ -12,6 +12,8 @@ public class CinemachineBlendMonitor : MonoBehaviour
     public static event Action<CinemachineBlendMonitor> OnCameraBlendStarted;
     public static event Action<CinemachineBlendMonitor> OnCameraBlendFinished;
 
+
+
     private CinemachineBrain cinemachineBrain;
     //[SerializeField] private PostProcessVolume postPro;
     //private ColorGrading colorGrading;
@@ -19,7 +21,7 @@ public class CinemachineBlendMonitor : MonoBehaviour
     private VolumeProfile volumeProfile;
     private ColorAdjustments colorAdjustment;
     private ChromaticAberration chroma;
-   
+    private LensDistortion lensDistortion;
 
     private bool blendingOnProgress = false;
 
@@ -27,6 +29,9 @@ public class CinemachineBlendMonitor : MonoBehaviour
     private float smoothFromTime = 0.12f;
     private float smoothRef;
     private float currentSaturationSmoothValue;
+
+    private float distortionSmoothTime = 0.8f;
+    private float currentLensDistortionValue;
 
     // Start is called before the first frame update
     void Start()
@@ -37,6 +42,7 @@ public class CinemachineBlendMonitor : MonoBehaviour
         volumeProfile = uPostPro.profile;
         volumeProfile.TryGet(out colorAdjustment);
         volumeProfile.TryGet(out chroma);
+        volumeProfile.TryGet(out lensDistortion);
 
 
     }
@@ -72,6 +78,12 @@ public class CinemachineBlendMonitor : MonoBehaviour
                 currentSaturationSmoothValue = Mathf.SmoothDamp(colorAdjustment.saturation.value, -80, ref smoothRef, smoothToTime);
                 colorAdjustment.saturation.value = currentSaturationSmoothValue;
             }
+
+            if(currentLensDistortionValue != -0.40f)
+            {
+                currentLensDistortionValue = Mathf.SmoothDamp(lensDistortion.intensity.value, -0.40f, ref smoothRef, distortionSmoothTime);
+                lensDistortion.intensity.value = currentLensDistortionValue;
+            }
         }
         else if(!blendingOnProgress)
         {
@@ -86,6 +98,15 @@ public class CinemachineBlendMonitor : MonoBehaviour
 
                 colorAdjustment.saturation.value = currentSaturationSmoothValue;
                 //colorAdjustment.saturation.Override()
+            }
+
+            if(currentLensDistortionValue != 0)
+            {
+                currentLensDistortionValue = Mathf.SmoothDamp(lensDistortion.intensity.value, 0, ref smoothRef, distortionSmoothTime);
+                if (Mathf.Abs(currentLensDistortionValue) < 0.01f)
+                    currentLensDistortionValue = 0;
+
+                lensDistortion.intensity.value = currentLensDistortionValue;
             }
         }
     }

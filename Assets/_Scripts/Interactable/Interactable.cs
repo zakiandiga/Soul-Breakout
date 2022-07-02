@@ -21,7 +21,7 @@ public class Interactable : MonoBehaviour
         Debug.Log(gameObject.name + " STOP interact with: " + currentInteractingPlayer.name);
     }
 
-    protected void OnTriggerEnter(Collider other)
+    protected virtual void OnTriggerEnter(Collider other)
     {        
         if (currentInteractingPlayer == null)
         {
@@ -47,7 +47,7 @@ public class Interactable : MonoBehaviour
             return;
     }
 
-    protected void OnTriggerStay(Collider other)
+    protected virtual void OnTriggerStay(Collider other)
     {
         if (currentInteractingPlayer == null)
         {
@@ -76,7 +76,7 @@ public class Interactable : MonoBehaviour
             return;
     }
 
-    protected void OnTriggerExit(Collider other)
+    protected virtual void OnTriggerExit(Collider other)
     {
         if(currentInteractingPlayer == other.GetComponent<FirstPersonCinemachine>())
         {
