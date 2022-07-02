@@ -250,6 +250,7 @@ namespace ECM.Controllers
             }
 
             interact = Input.GetKey(KeyCode.T); 
+            
         }
 
         private void Possess()
@@ -347,7 +348,7 @@ namespace ECM.Controllers
                 IsPossessing = false;
             }
 
-            if(!IsInteracting)
+            if(!IsInteracting)     //interact
             {
                 if(interact)
                 {
