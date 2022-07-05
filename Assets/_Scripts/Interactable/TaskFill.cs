@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class TaskFill : Interactable
 {
@@ -12,10 +13,24 @@ public class TaskFill : Interactable
     [SerializeField] private int characterCode = 1;
 
     [SerializeField] private float maxProgress = 10f;
+
+    [SerializeField] private GameObject sprite;
+    private Material currentMaterial;
+    [SerializeField] private Material finishedMaterial;
+
     private float currentProgress = 0f;
 
     private bool isProgressing = false;
     private bool taskFinished = false;
+
+    private TextMeshProUGUI signText;
+
+    private void Start()
+    {
+        currentMaterial = sprite.GetComponent<MeshRenderer>().material;
+        signText = sign.GetComponentInChildren<TextMeshProUGUI>();
+        Debug.Log(currentMaterial);
+    }
 
     protected override void StartInteract()
     {
@@ -72,13 +87,16 @@ public class TaskFill : Interactable
         {
             currentProgress += Time.deltaTime;
 
-            Debug.Log((int)currentProgress + "/" + maxProgress);
+            //Debug.Log((int)currentProgress + "/" + maxProgress);
         }
 
         if (!taskFinished && currentProgress >= maxProgress)
         {
             Debug.Log("Task Done");
             taskFinished = true;
+            signText.text = "TASK ALREADY COMPLETED";
+            currentMaterial = finishedMaterial;
+            Debug.Log(currentMaterial);
             isProgressing = false;
         }
     }

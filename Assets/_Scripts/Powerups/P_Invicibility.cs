@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class P_Invicibility : MonoBehaviour
 {
+
     [SerializeField] private Material material;
     [SerializeField] private Shader dissolveShader;
 
@@ -16,13 +17,26 @@ public class P_Invicibility : MonoBehaviour
 
     private bool dissolve = false;
 
+    private CapsuleCollider playerCollider;
+    [SerializeField] private Collider getThroughCol;
+
 
 
     // Start is called before the first frame update
     void Start()
     {
         //material = GetComponent<SkinnedMeshRenderer>().material;
+        //thisRenderer = GetComponent<SkinnedMeshRenderer>();
+        //material = thisRenderer.material;
+
+        Debug.Log(material.name);
         material.SetFloat("InvisibilityIntensity", 0f);
+        //Debug.Log(material.GetFloat("TestVar"));
+
+        playerCollider = transform.parent.GetComponentInParent<CapsuleCollider>();
+        //Physics.IgnoreCollision(playerCollider, getThroughCol, true);
+        
+        
     }
 
     // Update is called once per frame
@@ -50,8 +64,8 @@ public class P_Invicibility : MonoBehaviour
     {
         dissolve = Input.GetKey(KeyCode.Q);
 
-        Debug.Log("inside handl input");
-        Debug.Log(dissolve);
+        //Debug.Log("inside handl input");
+        //Debug.Log(dissolve);
 
         /*if(!IsDissolving)
         {

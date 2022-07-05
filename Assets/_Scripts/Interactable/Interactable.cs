@@ -21,6 +21,7 @@ public class Interactable : MonoBehaviour
         Debug.Log(gameObject.name + " STOP interact with: " + currentInteractingPlayer.name);
     }
 
+
     protected virtual void OnTriggerEnter(Collider other)
     {        
         if (currentInteractingPlayer == null)

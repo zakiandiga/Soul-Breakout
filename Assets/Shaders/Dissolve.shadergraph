@@ -14,6 +14,9 @@
         },
         {
             "m_Id": "91656d7ee29644b8ab5156e6e5a48c00"
+        },
+        {
+            "m_Id": "68f4739da2fd4fbe8c9b44dbc34080a3"
         }
     ],
     "m_Keywords": [],
@@ -77,11 +80,28 @@
         },
         {
             "m_Id": "ff8bb652fa7c40a2947acc5671d2cd86"
+        },
+        {
+            "m_Id": "059e916555c3467e8ca0e7d988439b61"
         }
     ],
     "m_GroupDatas": [],
     "m_StickyNoteDatas": [],
     "m_Edges": [
+        {
+            "m_OutputSlot": {
+                "m_Node": {
+                    "m_Id": "059e916555c3467e8ca0e7d988439b61"
+                },
+                "m_SlotId": 0
+            },
+            "m_InputSlot": {
+                "m_Node": {
+                    "m_Id": "ff8bb652fa7c40a2947acc5671d2cd86"
+                },
+                "m_SlotId": 0
+            }
+        },
         {
             "m_OutputSlot": {
                 "m_Node": {
@@ -150,20 +170,6 @@
                     "m_Id": "1df8d0b34dc8468883ac6bdd49f9aaba"
                 },
                 "m_SlotId": 1
-            }
-        },
-        {
-            "m_OutputSlot": {
-                "m_Node": {
-                    "m_Id": "5d7eb710192e47fc9a59d3ef77cac5ed"
-                },
-                "m_SlotId": 0
-            },
-            "m_InputSlot": {
-                "m_Node": {
-                    "m_Id": "ff8bb652fa7c40a2947acc5671d2cd86"
-                },
-                "m_SlotId": 0
             }
         },
         {
@@ -307,6 +313,41 @@
 
 {
     "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.PropertyNode",
+    "m_ObjectId": "059e916555c3467e8ca0e7d988439b61",
+    "m_Group": {
+        "m_Id": ""
+    },
+    "m_Name": "Property",
+    "m_DrawState": {
+        "m_Expanded": true,
+        "m_Position": {
+            "serializedVersion": "2",
+            "x": -863.9202880859375,
+            "y": 711.1829223632813,
+            "width": 0.0,
+            "height": 0.0
+        }
+    },
+    "m_Slots": [
+        {
+            "m_Id": "946dbdbdc7e3413693e5e96774c2cc43"
+        }
+    ],
+    "synonyms": [],
+    "m_Precision": 0,
+    "m_PreviewExpanded": true,
+    "m_PreviewMode": 0,
+    "m_CustomColors": {
+        "m_SerializableColors": []
+    },
+    "m_Property": {
+        "m_Id": "68f4739da2fd4fbe8c9b44dbc34080a3"
+    }
+}
+
+{
+    "m_SGVersion": 0,
     "m_Type": "UnityEditor.ShaderGraph.BlockNode",
     "m_ObjectId": "0bfd625106d1480d883b3c65ace3d9a8",
     "m_Group": {
@@ -381,7 +422,7 @@
     "m_Type": "UnityEditor.ShaderGraph.Vector1MaterialSlot",
     "m_ObjectId": "1b20cd91cb744ec79fbec4c76d8edb19",
     "m_Id": 0,
-    "m_DisplayName": "_InvisibilityIntensity",
+    "m_DisplayName": "InvisibilityIntensity",
     "m_SlotType": 1,
     "m_Hidden": false,
     "m_ShaderOutputName": "Out",
@@ -828,6 +869,29 @@
 }
 
 {
+    "m_SGVersion": 1,
+    "m_Type": "UnityEditor.ShaderGraph.Internal.Vector1ShaderProperty",
+    "m_ObjectId": "68f4739da2fd4fbe8c9b44dbc34080a3",
+    "m_Guid": {
+        "m_GuidSerialized": "20c3eaca-6709-42e7-8a3c-1b9c8671bbbb"
+    },
+    "m_Name": "TestVar",
+    "m_DefaultReferenceName": "Vector1_68f4739da2fd4fbe8c9b44dbc34080a3",
+    "m_OverrideReferenceName": "",
+    "m_GeneratePropertyBlock": true,
+    "m_Precision": 0,
+    "overrideHLSLDeclaration": false,
+    "hlslDeclarationOverride": 0,
+    "m_Hidden": false,
+    "m_Value": 0.46000000834465029,
+    "m_FloatType": 0,
+    "m_RangeValues": {
+        "x": 0.0,
+        "y": 1.0
+    }
+}
+
+{
     "m_SGVersion": 0,
     "m_Type": "UnityEditor.ShaderGraph.DynamicVectorMaterialSlot",
     "m_ObjectId": "6d9fbdb7bc8349de9dad15d79942cc75",
@@ -1061,6 +1125,21 @@
     "m_ObjectId": "94514d05afd84b06847236a880101bbf",
     "m_Id": 2,
     "m_DisplayName": "Out",
+    "m_SlotType": 1,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "Out",
+    "m_StageCapability": 3,
+    "m_Value": 0.0,
+    "m_DefaultValue": 0.0,
+    "m_Labels": []
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Vector1MaterialSlot",
+    "m_ObjectId": "946dbdbdc7e3413693e5e96774c2cc43",
+    "m_Id": 0,
+    "m_DisplayName": "TestVar",
     "m_SlotType": 1,
     "m_Hidden": false,
     "m_ShaderOutputName": "Out",
