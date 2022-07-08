@@ -5,26 +5,23 @@ using ECM.Controllers;
 using UnityEngine;
 using UnityEngine.AI;
 
+
 public class EnemyAI : MonoBehaviour
 {
-    [SerializeField] List<GameObject> targets;
+    public AIManager aIManager;
 
-   // GameObject[] targets;
     NavMeshAgent navMeshAgent;
-    //CinemachineVirtualCamera vcam;
 
-    //public FirstPersonCinemachine camScript;
+    [SerializeField] public Transform objectTransform;
     
 
     // Start is called before the first frame update
     void Start()
     {
-        /*if(targets==null)
-            targets = GameObject.FindGameObjectsWithTag("character");*/
-
+  
         navMeshAgent = GetComponent<NavMeshAgent>();
 
-        //camScript = GetComponent<FirstPersonCinemachine>();
+        objectTransform = GetComponent<Transform>();
 
 
     }
@@ -32,16 +29,22 @@ public class EnemyAI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        FindTarget();  
+        if(GetComponent<FirstPersonCinemachine>().enabled==true)     //if the chaaracter is the player
+        {
+            GetComponent<NavMeshAgent>().enabled=false;
+            Vector3 dumpLoc = aIManager.WhereIsPlayer(objectTransform.position);            
+        }
+        else                                                        //if the chaaracter is the enemy
+        {
+             GetComponent<NavMeshAgent>().enabled=true;
+            Vector3 playerPosition  = aIManager.WhereIsPlayer(new Vector3 (0f,0f,0f));
+            FollowTarget(playerPosition); 
+        }
+            
     }
 
-    public void FindTarget()
-    {
-        for(int i=0; i<targets.Count; i++)
-        {
-           if(targets[i].GetComponent<FirstPersonCinemachine>().enabled==true)
-                navMeshAgent.SetDestination(targets[i].transform.position);
-        }    
-
+    public void FollowTarget(Vector3 playerPosition)
+    {       
+         navMeshAgent.SetDestination(playerPosition);
     }
 }
