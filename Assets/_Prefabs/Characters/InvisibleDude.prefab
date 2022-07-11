@@ -90,9 +90,11 @@ GameObject:
   - component: {fileID: 7887396809286111373}
   - component: {fileID: 7887396809286111372}
   - component: {fileID: 7887396809286111371}
-  m_Layer: 0
+  - component: {fileID: 377352138}
+  - component: {fileID: 377352139}
+  m_Layer: 7
   m_Name: InvisibleDude
-  m_TagString: Untagged
+  m_TagString: character
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -242,6 +244,7 @@ MonoBehaviour:
   _backwardSpeed: 3
   _strafeSpeed: 4
   _runSpeedMultiplier: 2
+  characterCode: 1
 --- !u!114 &7887396809286111371
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -258,7 +261,43 @@ MonoBehaviour:
   possessRange: 500
   possessingRaycastLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 16513
+--- !u!114 &377352138
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7887396809286111379}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3219d3cee4984c347952a97c329bef19, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  aIManager: {fileID: 0}
+  objectTransform: {fileID: 0}
+--- !u!195 &377352139
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7887396809286111379}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
 --- !u!1 &7887396809478835674
 GameObject:
   m_ObjectHideFlags: 0
@@ -284,7 +323,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7887396809478835674}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0.15}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 7887396808614980795}
@@ -660,3 +699,24 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4728115190149872, guid: c1bf78096101892488e2d81d47664125, type: 3}
   m_PrefabInstance: {fileID: 3319647842286996905}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &3320725919970391061 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1219077253953980, guid: c1bf78096101892488e2d81d47664125, type: 3}
+  m_PrefabInstance: {fileID: 3319647842286996905}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &55768449
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3320725919970391061}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b7f9d0530ce17c645902bd31713582cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  material: {fileID: 2100000, guid: ccae2dc6cf6f0c4479b782fedd0c8172, type: 2}
+  dissolveShader: {fileID: 0}
+  IsDissolving: 0
+  getThroughCol: {fileID: 0}
