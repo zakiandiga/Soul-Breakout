@@ -12,7 +12,10 @@ public class EnemyAI : MonoBehaviour
 
     NavMeshAgent navMeshAgent;
 
-    [SerializeField] public Transform objectTransform;
+    [SerializeField] float chaseRange = 5f;
+    public Transform objectTransform;
+    
+    float distanceToTarget = Mathf.Infinity;
     
 
     // Start is called before the first frame update
@@ -45,6 +48,12 @@ public class EnemyAI : MonoBehaviour
 
     public void FollowTarget(Vector3 playerPosition)
     {       
-         navMeshAgent.SetDestination(playerPosition);
+        distanceToTarget = Vector3.Distance(playerPosition, objectTransform.position );
+
+        if(distanceToTarget<=chaseRange)
+        {
+            navMeshAgent.SetDestination(playerPosition);
+        }
+         
     }
 }
