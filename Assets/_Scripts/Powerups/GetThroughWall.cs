@@ -15,6 +15,7 @@ public class GetThroughWall : MonoBehaviour
 
     private void Update()
     {
+        //Try to avoid running physics in update if possible
         Physics.IgnoreCollision(thisCollider, specialWall, true);
         
     }
