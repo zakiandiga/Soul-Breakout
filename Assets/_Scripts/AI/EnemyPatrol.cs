@@ -34,6 +34,9 @@ public class EnemyPatrol : MonoBehaviour
 
         agent.destination = points[destinationPoint].position;
 
+        Debug.Log("navmeshAGENT DESTINATION " + agent.destination);
+
+
 
         destinationPoint = (destinationPoint+1) % points.Count;  //looping through iterator
 

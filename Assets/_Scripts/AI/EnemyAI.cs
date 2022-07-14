@@ -32,7 +32,7 @@ public class EnemyAI : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void LateUpdate()
     {
         if(GetComponent<FirstPersonCinemachine>().enabled==true)     //if the chaaracter is the player
         {
@@ -45,6 +45,11 @@ public class EnemyAI : MonoBehaviour
             Vector3 playerPosition  = aIManager.WhereIsPlayer(new Vector3 (0f,0f,0f));
             FollowTarget(playerPosition); 
         }
+
+
+        //Debug.Log("distance to target: " + distanceToTarget);
+        
+
             
     }
 
@@ -55,6 +60,9 @@ public class EnemyAI : MonoBehaviour
         if(distanceToTarget<=chaseRange)
         {
             navMeshAgent.SetDestination(playerPosition);
+
+            Debug.Log("navmeshAGENT DESTINATION " + navMeshAgent.destination);
+
             navMeshAgent.speed = chaseSpeed;
         }
          
