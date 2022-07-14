@@ -13,6 +13,8 @@ public class EnemyAI : MonoBehaviour
     NavMeshAgent navMeshAgent;
 
     [SerializeField] float chaseRange = 5f;
+    [SerializeField] private float chaseSpeed = 3.5f;
+
     public Transform objectTransform;
     
     float distanceToTarget = Mathf.Infinity;
@@ -53,6 +55,7 @@ public class EnemyAI : MonoBehaviour
         if(distanceToTarget<=chaseRange)
         {
             navMeshAgent.SetDestination(playerPosition);
+            navMeshAgent.speed = chaseSpeed;
         }
          
     }
