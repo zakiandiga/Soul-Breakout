@@ -16,7 +16,7 @@ public class EnemyAI : MonoBehaviour
     [SerializeField] float chaseRange = 5f;
     [SerializeField] private float chaseSpeed = 3.5f;
 
-    public Transform objectTransform;
+    [HideInInspector] public Transform objectTransform;
     
     float distanceToTarget = Mathf.Infinity;
     

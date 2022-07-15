@@ -10,8 +10,8 @@ public class FieldOfViewAI : MonoBehaviour
 
     private Transform target;
 
-    public GameObject[] playerRefs;
-    public GameObject playerRef;
+    [HideInInspector] public GameObject[] playerRefs;
+    [HideInInspector] public GameObject playerRef;
 
     public LayerMask targetMask;
     public LayerMask obstructionMask;
@@ -23,7 +23,6 @@ public class FieldOfViewAI : MonoBehaviour
        playerRefs = GameObject.FindGameObjectsWithTag("character");
        for(int i=0;i<playerRefs.Length;i++)
        {
-       // Debug.Log("object name" + playerRefs[i].name);
 
         if(playerRefs[i].GetComponent<FirstPersonCinemachine>().enabled==true)
         {
