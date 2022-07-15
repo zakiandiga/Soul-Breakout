@@ -9,6 +9,7 @@ using UnityEngine.AI;
 public class EnemyAI : MonoBehaviour
 {
     public AIManager aIManager;
+    public FieldOfViewAI fieldOfViewAI;
 
     NavMeshAgent navMeshAgent;
 
@@ -57,7 +58,7 @@ public class EnemyAI : MonoBehaviour
     {       
         distanceToTarget = Vector3.Distance(playerPosition, objectTransform.position );
 
-        if(distanceToTarget<=chaseRange)
+        if(distanceToTarget<=chaseRange || fieldOfViewAI.canSeePlayer == true)
         {
             navMeshAgent.SetDestination(playerPosition);
 
