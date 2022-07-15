@@ -34,7 +34,7 @@ public class EnemyPatrol : MonoBehaviour
 
         agent.destination = points[destinationPoint].position;
 
-        Debug.Log("navmeshAGENT DESTINATION " + agent.destination);
+       // Debug.Log("navmeshAGENT DESTINATION " + agent.destination);
 
 
 
@@ -53,10 +53,10 @@ public class EnemyPatrol : MonoBehaviour
             GoToNextPoint();           
         }
 
-        Debug.Log("PAth status: " + agent.pathStatus);
+       // Debug.Log("PAth status: " + agent.pathStatus);
 
 
-        Debug.Log("agent destinaation: " + agent.destination);
+       // Debug.Log("agent destinaation: " + agent.destination);
 
         
     }

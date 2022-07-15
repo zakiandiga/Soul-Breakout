@@ -61,7 +61,7 @@ public class EnemyAI : MonoBehaviour
         {
             navMeshAgent.SetDestination(playerPosition);
 
-            Debug.Log("navmeshAGENT DESTINATION " + navMeshAgent.destination);
+            //Debug.Log("navmeshAGENT DESTINATION " + navMeshAgent.destination);
 
             navMeshAgent.speed = chaseSpeed;
         }
