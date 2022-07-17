@@ -18,7 +18,7 @@ GameObject:
   - component: {fileID: 2878639764067586134}
   - component: {fileID: 2878639764460909978}
   - component: {fileID: 5370351269634130143}
-  - component: {fileID: 5370351269634130086}
+  - component: {fileID: 1129958117}
   m_Layer: 7
   m_Name: InitialCharacter
   m_TagString: character
@@ -202,7 +202,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   aIManager: {fileID: 0}
+  fieldOfViewAI: {fileID: 0}
   chaseRange: 5
+  chaseSpeed: 3.5
   objectTransform: {fileID: 2878639764067586135}
 --- !u!195 &5370351269634130143
 NavMeshAgent:
@@ -226,7 +228,7 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!114 &5370351269634130086
+--- !u!114 &1129958117
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -235,12 +237,20 @@ MonoBehaviour:
   m_GameObject: {fileID: 2878639764067586126}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3219d3cee4984c347952a97c329bef19, type: 3}
+  m_Script: {fileID: 11500000, guid: 03c15249cde3d7c41ba685fcd8653926, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  aIManager: {fileID: 0}
-  chaseRange: 5
-  objectTransform: {fileID: 2878639764067586135}
+  radius: 15
+  angle: 135
+  playerRefs: []
+  playerRef: {fileID: 0}
+  targetMask:
+    serializedVersion: 2
+    m_Bits: 128
+  obstructionMask:
+    serializedVersion: 2
+    m_Bits: 64
+  canSeePlayer: 0
 --- !u!1 &2878639764210535687
 GameObject:
   m_ObjectHideFlags: 0

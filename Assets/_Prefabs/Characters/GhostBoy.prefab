@@ -16,10 +16,9 @@ GameObject:
   - component: {fileID: 2168297109193977558}
   - component: {fileID: 2168297109193977559}
   - component: {fileID: 2168297109193977552}
-  - component: {fileID: 8314488376591121628}
   - component: {fileID: 8314488376093611767}
-  - component: {fileID: 8314488375642747080}
   - component: {fileID: 8314488375642747081}
+  - component: {fileID: 1940640104}
   m_Layer: 14
   m_Name: GhostBoy
   m_TagString: character
@@ -180,7 +179,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2168297109193977544}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fd228adcc0b13374ea47543e2acab2a5, type: 3}
   m_Name: 
@@ -190,20 +189,6 @@ MonoBehaviour:
   possessingRaycastLayer:
     serializedVersion: 2
     m_Bits: 16513
---- !u!114 &8314488376591121628
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2168297109193977544}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 81a63575a867d934abe44326741da348, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  thisCollider: {fileID: 2168297109193977555}
-  specialWall: {fileID: 0}
 --- !u!114 &8314488376093611767
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -217,22 +202,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   aIManager: {fileID: 0}
+  fieldOfViewAI: {fileID: 0}
   chaseRange: 5
-  objectTransform: {fileID: 2168297109193977553}
---- !u!114 &8314488375642747080
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2168297109193977544}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3219d3cee4984c347952a97c329bef19, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  aIManager: {fileID: 0}
-  chaseRange: 5
+  chaseSpeed: 3.5
   objectTransform: {fileID: 2168297109193977553}
 --- !u!195 &8314488375642747081
 NavMeshAgent:
@@ -256,6 +228,29 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!114 &1940640104
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2168297109193977544}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03c15249cde3d7c41ba685fcd8653926, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  radius: 15
+  angle: 135
+  playerRefs: []
+  playerRef: {fileID: 0}
+  targetMask:
+    serializedVersion: 2
+    m_Bits: 128
+  obstructionMask:
+    serializedVersion: 2
+    m_Bits: 64
+  canSeePlayer: 0
 --- !u!1 &2168297109621977985
 GameObject:
   m_ObjectHideFlags: 0

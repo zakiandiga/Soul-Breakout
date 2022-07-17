@@ -17,8 +17,8 @@ GameObject:
   - component: {fileID: 66496387054547905}
   - component: {fileID: 66496387054547910}
   - component: {fileID: 7897510027900206356}
-  - component: {fileID: 7897510028579202835}
   - component: {fileID: 7897510028579202832}
+  - component: {fileID: 1670650777}
   m_Layer: 7
   m_Name: JumpGuy
   m_TagString: character
@@ -179,7 +179,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 66496387054547934}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fd228adcc0b13374ea47543e2acab2a5, type: 3}
   m_Name: 
@@ -202,22 +202,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   aIManager: {fileID: 0}
+  fieldOfViewAI: {fileID: 0}
   chaseRange: 5
-  objectTransform: {fileID: 0}
---- !u!114 &7897510028579202835
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 66496387054547934}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3219d3cee4984c347952a97c329bef19, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  aIManager: {fileID: 0}
-  chaseRange: 5
+  chaseSpeed: 3.5
   objectTransform: {fileID: 0}
 --- !u!195 &7897510028579202832
 NavMeshAgent:
@@ -241,6 +228,29 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!114 &1670650777
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 66496387054547934}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03c15249cde3d7c41ba685fcd8653926, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  radius: 15
+  angle: 135
+  playerRefs: []
+  playerRef: {fileID: 0}
+  targetMask:
+    serializedVersion: 2
+    m_Bits: 128
+  obstructionMask:
+    serializedVersion: 2
+    m_Bits: 64
+  canSeePlayer: 0
 --- !u!1 &66496387214143127
 GameObject:
   m_ObjectHideFlags: 0

@@ -17,8 +17,8 @@ GameObject:
   - component: {fileID: 94529833629367554}
   - component: {fileID: 94529833629367557}
   - component: {fileID: 7798686415530099268}
-  - component: {fileID: 7798686415043989231}
   - component: {fileID: 7798686415043989230}
+  - component: {fileID: 2050646576}
   m_Layer: 7
   m_Name: InvisibleDude
   m_TagString: character
@@ -179,7 +179,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 94529833629367581}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fd228adcc0b13374ea47543e2acab2a5, type: 3}
   m_Name: 
@@ -202,22 +202,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   aIManager: {fileID: 0}
+  fieldOfViewAI: {fileID: 2050646576}
   chaseRange: 5
-  objectTransform: {fileID: 0}
---- !u!114 &7798686415043989231
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 94529833629367581}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3219d3cee4984c347952a97c329bef19, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  aIManager: {fileID: 0}
-  chaseRange: 5
+  chaseSpeed: 3.5
   objectTransform: {fileID: 0}
 --- !u!195 &7798686415043989230
 NavMeshAgent:
@@ -241,6 +228,29 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!114 &2050646576
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 94529833629367581}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03c15249cde3d7c41ba685fcd8653926, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  radius: 15
+  angle: 135
+  playerRefs: []
+  playerRef: {fileID: 0}
+  targetMask:
+    serializedVersion: 2
+    m_Bits: 128
+  obstructionMask:
+    serializedVersion: 2
+    m_Bits: 64
+  canSeePlayer: 0
 --- !u!1 &94529834560184404
 GameObject:
   m_ObjectHideFlags: 0
@@ -726,7 +736,7 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 1219077253953980, guid: c1bf78096101892488e2d81d47664125, type: 3}
   m_PrefabInstance: {fileID: 4768113426256060455}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &7798686415884720143
+--- !u!114 &7798686415364265124
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -742,7 +752,7 @@ MonoBehaviour:
   dissolveShader: {fileID: 0}
   IsDissolving: 0
   getThroughCol: {fileID: 0}
---- !u!114 &7798686415364265124
+--- !u!114 &7798686415884720143
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

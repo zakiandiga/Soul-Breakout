@@ -2596,6 +2596,10 @@ PrefabInstance:
       propertyPath: aIManager
       value: 
       objectReference: {fileID: 1953459863}
+    - target: {fileID: 7798686415530099268, guid: 6abc5bfd5b03fbe47890a931ea0d793e, type: 3}
+      propertyPath: fieldOfViewAI
+      value: 
+      objectReference: {fileID: 2050646576}
     m_RemovedComponents:
     - {fileID: 7798686415043989231, guid: 6abc5bfd5b03fbe47890a931ea0d793e, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 6abc5bfd5b03fbe47890a931ea0d793e, type: 3}
@@ -22786,7 +22790,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5997472437947624460, guid: 09e00e2a0ad39b54091f706ca1e53271, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1.88
+      value: 22
       objectReference: {fileID: 0}
     - target: {fileID: 5997472437947624460, guid: 09e00e2a0ad39b54091f706ca1e53271, type: 3}
       propertyPath: m_LocalPosition.y
@@ -27933,7 +27937,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2878639764067586135, guid: 46b0a190be0c06b468b6822f7193de67, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1.88
+      value: 22
       objectReference: {fileID: 0}
     - target: {fileID: 2878639764067586135, guid: 46b0a190be0c06b468b6822f7193de67, type: 3}
       propertyPath: m_LocalPosition.y
