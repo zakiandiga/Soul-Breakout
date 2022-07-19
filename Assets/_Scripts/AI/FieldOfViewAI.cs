@@ -10,8 +10,8 @@ public class FieldOfViewAI : MonoBehaviour
 
     private Transform target;
 
-    public GameObject[] playerRefs;
-    public GameObject playerRef;
+    [HideInInspector] public GameObject[] playerRefs;
+    [HideInInspector] public GameObject playerRef;
 
     public LayerMask targetMask;
     public LayerMask obstructionMask;
@@ -65,7 +65,7 @@ public class FieldOfViewAI : MonoBehaviour
                     {
                         float distanceToTarget = Vector3.Distance(transform.position,target.position);
 
-                        if(!Physics.Raycast(transform.position,directionToTarget,distanceToTarget, obstructionMask))   //if there is an obstacle btwn player & enemy
+                        if(!Physics.Raycast(transform.position,directionToTarget,distanceToTarget, obstructionMask))   //if there is not an obstacle btwn player & enemy
                             canSeePlayer=true;
                         else
                             canSeePlayer = false;

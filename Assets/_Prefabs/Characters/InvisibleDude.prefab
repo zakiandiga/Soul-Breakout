@@ -18,6 +18,7 @@ GameObject:
   - component: {fileID: 94529833629367557}
   - component: {fileID: 7798686415530099268}
   - component: {fileID: 7798686415043989230}
+  - component: {fileID: 1779197011575223590}
   - component: {fileID: 2050646576}
   m_Layer: 7
   m_Name: InvisibleDude
@@ -228,6 +229,21 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!114 &1779197011575223590
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 94529833629367581}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb2336831ccfded4dae86c4328ae9ebf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  points: []
+  minRemainingDistance: 1.15
+  patrollingSpeed: 1.77
 --- !u!114 &2050646576
 MonoBehaviour:
   m_ObjectHideFlags: 0

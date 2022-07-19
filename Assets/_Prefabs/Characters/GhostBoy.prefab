@@ -18,7 +18,8 @@ GameObject:
   - component: {fileID: 2168297109193977552}
   - component: {fileID: 8314488376093611767}
   - component: {fileID: 8314488375642747081}
-  - component: {fileID: 1940640104}
+  - component: {fileID: 4520828062275397798}
+  - component: {fileID: 546584130}
   m_Layer: 14
   m_Name: GhostBoy
   m_TagString: character
@@ -202,7 +203,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   aIManager: {fileID: 0}
-  fieldOfViewAI: {fileID: 0}
+  fieldOfViewAI: {fileID: 546584130}
   chaseRange: 5
   chaseSpeed: 3.5
   objectTransform: {fileID: 2168297109193977553}
@@ -228,7 +229,22 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!114 &1940640104
+--- !u!114 &4520828062275397798
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2168297109193977544}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb2336831ccfded4dae86c4328ae9ebf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  points: []
+  minRemainingDistance: 1.15
+  patrollingSpeed: 1.77
+--- !u!114 &546584130
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

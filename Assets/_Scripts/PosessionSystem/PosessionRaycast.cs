@@ -138,7 +138,7 @@ public class PosessionRaycast : MonoBehaviour
 
         targetPossess = null;
         isPossessing = false;
-        this.enabled = false;
+        //this.enabled = false;
     }
 
 
