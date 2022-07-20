@@ -58,6 +58,7 @@ public class FieldOfViewAI : MonoBehaviour
             {
                 if(rangeChecks[i].GetComponent<FirstPersonCinemachine>().enabled==true)     //if the character with FPC enabled (aka the player)
                 {
+                    Debug.Log("player is" + rangeChecks[i].name);
                     target = rangeChecks[i].transform;
                     Vector3 directionToTarget = (target.position - transform.position).normalized;
 
@@ -66,7 +67,12 @@ public class FieldOfViewAI : MonoBehaviour
                         float distanceToTarget = Vector3.Distance(transform.position,target.position);
 
                         if(!Physics.Raycast(transform.position,directionToTarget,distanceToTarget, obstructionMask))   //if there is not an obstacle btwn player & enemy
+                        {
+                            Debug.Log("player is Oobeing watchedOOO" + rangeChecks[i].name);
                             canSeePlayer=true;
+
+                        }
+                            
                         else
                             canSeePlayer = false;
 
@@ -81,8 +87,9 @@ public class FieldOfViewAI : MonoBehaviour
         }
         else if(canSeePlayer)       //treverting to the original bool state of canSeePlayer 
             canSeePlayer=false;
-        
-        if(Vector3.Distance(target.position,transform.position)>radius)
+
+        //Debug.Log(target.position);
+        if(Vector3.Distance(target.position,transform.position)>radius || target.position==null)
             canSeePlayer=false;
 
 
