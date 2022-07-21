@@ -60,6 +60,8 @@ public class FieldOfViewAI : MonoBehaviour
                 {
                     Debug.Log("player is" + rangeChecks[i].name);
                     target = rangeChecks[i].transform;
+
+
                     Vector3 directionToTarget = (target.position - transform.position).normalized;
 
                     if(Vector3.Angle(transform.forward,directionToTarget) < angle/2)     //if angle btwn (normal & target) < Viewing_angle/2 (=> player is in the FOV)
@@ -70,6 +72,9 @@ public class FieldOfViewAI : MonoBehaviour
                         {
                             Debug.Log("player is Oobeing watchedOOO" + rangeChecks[i].name);
                             canSeePlayer=true;
+
+                            if(Vector3.Distance(target.position,transform.position)>radius || target.position==null)
+                            canSeePlayer=false;
 
                         }
                             
@@ -82,6 +87,8 @@ public class FieldOfViewAI : MonoBehaviour
 
 
                 }
+                break;
+        
             }
 
         }
@@ -89,8 +96,7 @@ public class FieldOfViewAI : MonoBehaviour
             canSeePlayer=false;
 
         //Debug.Log(target.position);
-        if(Vector3.Distance(target.position,transform.position)>radius || target.position==null)
-            canSeePlayer=false;
+        /**/
 
 
     }
