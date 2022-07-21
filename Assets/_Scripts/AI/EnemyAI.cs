@@ -10,7 +10,7 @@ public class EnemyAI : MonoBehaviour
     public float NavMeshSpeed => navMeshAgent.enabled ? navMeshAgent.velocity.magnitude : 0;
 
     public AIManager aIManager;
-    public FieldOfViewAI fieldOfViewAI;
+    private FieldOfViewAI fieldOfViewAI; //Changed this to private
 
     NavMeshAgent navMeshAgent;
     private Animator animator; //Added for animation -Zak
@@ -22,7 +22,10 @@ public class EnemyAI : MonoBehaviour
     
     float distanceToTarget = Mathf.Infinity;
 
+    private bool isChasing = false;
+
     public event Action<bool> OnAITryPosses;
+
 
     // Start is called before the first frame update
     void Start()
@@ -32,10 +35,13 @@ public class EnemyAI : MonoBehaviour
 
         objectTransform = GetComponent<Transform>();
 
+        fieldOfViewAI = GetComponent<FieldOfViewAI>();
+
         animator = GetComponentInChildren<Animator>();
 
     }
 
+    /*
     // Update is called once per frame
     void LateUpdate()
     {
@@ -54,12 +60,26 @@ public class EnemyAI : MonoBehaviour
 
         //Debug.Log("distance to target: " + distanceToTarget);           
     }
+    */
 
-    public void FollowTarget(Vector3 playerPosition)
+    private void ChasePlayer()
+    {
+        navMeshAgent.speed = chaseSpeed;
+
+        navMeshAgent.SetDestination(fieldOfViewAI.CurrentPlayer.position);
+    }
+
+    //Later we can use this if the obstacle and navmesh already set properly
+    private void StopChasing()
+    {
+        navMeshAgent.SetDestination(fieldOfViewAI.LastPlayerPosition);
+    }
+
+    private void FollowTarget(Vector3 playerPosition)
     {       
         distanceToTarget = Vector3.Distance(playerPosition, objectTransform.position );
 
-        if(distanceToTarget <=chaseRange || fieldOfViewAI.canSeePlayer == true)
+        if(distanceToTarget <=chaseRange || fieldOfViewAI.CanSeePlayer == true)
         {
             navMeshAgent.SetDestination(playerPosition);
 
@@ -74,7 +94,31 @@ public class EnemyAI : MonoBehaviour
     {
         //Added this line for animation -Zak
         if(navMeshAgent.enabled)
+        {
             Animate();
+
+            //if there is player on sight
+            if (fieldOfViewAI.CurrentPlayer != null && 
+                (fieldOfViewAI.CanSeePlayer || fieldOfViewAI.CurrentDistance <= chaseRange))
+            {
+                if (!isChasing)
+                    isChasing = true;
+
+                ChasePlayer();
+            }
+
+            //else if player is out of sight
+            else
+            {
+                if(isChasing) //check if isChasing is true (to make sure we only check this once on exit chasing)
+                {
+                    isChasing = false;
+                    navMeshAgent.ResetPath();
+                    //StopChasing();
+
+                }
+            }
+        }
     }
 
     //Added this function for animation -Zak

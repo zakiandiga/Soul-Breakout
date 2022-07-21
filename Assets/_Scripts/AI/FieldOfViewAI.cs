@@ -1,10 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using ECM.Controllers;
 
 public class FieldOfViewAI : MonoBehaviour
 {
+    public bool CanSeePlayer => canSeePlayer;
+    public Transform CurrentPlayer => target;
+    public Vector3 LastPlayerPosition => lastPlayerPosition;
+    public float CurrentDistance => currentDistance;
+
     public float radius;
     [Range(0,360)] public float angle;
 
@@ -13,39 +19,133 @@ public class FieldOfViewAI : MonoBehaviour
     [HideInInspector] public GameObject[] playerRefs;
     [HideInInspector] public GameObject playerRef;
 
+    private List<FirstPersonCinemachine> potentialTargets = new List<FirstPersonCinemachine>();
+    private bool playerInRange = false;
+    private float currentDistance;
+    private Vector3 lastPlayerPosition; //the point where the player leave the field of view
+
     public LayerMask targetMask;
     public LayerMask obstructionMask;
-    public bool canSeePlayer;
+
+    private bool canSeePlayer; //I Change this to private and create a CanSeePlayer property that return the value of this
+
 
     // Start is called before the first frame update
     void Start()
     {
-       playerRefs = GameObject.FindGameObjectsWithTag("character");
-       for(int i=0;i<playerRefs.Length;i++)
-       {
-       // Debug.Log("object name" + playerRefs[i].name);
-
-        if(playerRefs[i].GetComponent<FirstPersonCinemachine>().enabled==true)
+        playerRefs = GameObject.FindGameObjectsWithTag("character");
+        for(int i=0;i<playerRefs.Length;i++)
         {
-            playerRef = playerRefs[i];
+        // Debug.Log("object name" + playerRefs[i].name);
+            if(playerRefs[i].GetComponent<FirstPersonCinemachine>().enabled==true)
+            {
+                playerRef = playerRefs[i];
+            }
+
         }
 
-       }
+        StartCoroutine(FOVRoutine());
+    }
 
-
-       StartCoroutine(FOVRoutine());
+    private void OnDisable()
+    {
+        StopCoroutine(FOVRoutine());
     }
 
     private IEnumerator FOVRoutine()                        //Calls this routine every 0.2s
     {
-        WaitForSeconds wait = new WaitForSeconds(0.2f);
+        //FieldOfViewCheck();
+        Debug.Log("FOVRoutine, playerInRange = " + playerInRange);
 
-        while(true)
+        
+
+        WaitForSeconds wait = new WaitForSeconds(0.3f);
+
+        while (true)
         {
             yield return wait;
-            FieldOfViewCheck();
+
+            if (playerInRange)
+                VisionCheck();
+
+            else
+                CheckPlayer();
+        }
+    }
+
+    private void VisionCheck()
+    {
+        Debug.Log("VisionCheck");
+        currentDistance = Vector3.Distance(transform.position, target.position);
+
+        if(currentDistance > radius)
+        {
+            lastPlayerPosition = target.position;
+
+            playerInRange = false;
+
+            if (canSeePlayer)
+                canSeePlayer = false;
         }
 
+        else if(currentDistance <= radius)
+        {
+            Vector3 directionToTarget = (target.position - transform.position).normalized;
+
+            if (Vector3.Angle(transform.forward, directionToTarget) < angle / 2)     //if angle btwn (normal & target) < Viewing_angle/2 (=> player is in the FOV)
+            {           
+
+                if (!Physics.Raycast(transform.position, directionToTarget, currentDistance, obstructionMask))   //if there is not an obstacle btwn player & enemy
+                {
+                    if(!canSeePlayer)
+                        canSeePlayer = true;
+                }
+            }
+        }
+        
+    }
+
+    private void CheckPlayer()
+    {
+        Debug.Log("Player Check");
+        Collider[] collidedCharacters = Physics.OverlapSphere(transform.position, radius, targetMask);
+
+        Debug.Log("Colliding characters: " + collidedCharacters.Length);
+        if(collidedCharacters.Length <= 0)
+        {
+            if (target != null)
+                target = null;
+
+            if(playerInRange != false)
+                playerInRange = false;
+
+            return;
+        }    
+
+        else if(collidedCharacters.Length > 0)
+        {
+            for (int i = 0; i < collidedCharacters.Length; ++i)
+            {
+                potentialTargets.Add(collidedCharacters[i].GetComponent<FirstPersonCinemachine>());
+            }
+
+            if (potentialTargets.Count <= 0)
+                return;
+
+
+            else if (potentialTargets.Count > 0)
+            {
+                foreach (FirstPersonCinemachine targetToChoose in potentialTargets)
+                {
+                    if (targetToChoose.enabled && (target != targetToChoose.transform || target == null))
+                        target = targetToChoose.transform;
+
+                }
+
+                if (target != null)
+                    playerInRange = true;
+            }
+        }
     }
 
     private void FieldOfViewCheck()
@@ -99,11 +199,5 @@ public class FieldOfViewAI : MonoBehaviour
         /**/
 
 
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }
