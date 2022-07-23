@@ -119,6 +119,16 @@ public class EnemyAI : MonoBehaviour
                 }
             }
         }
+
+        /*if(GetComponent<FirstPersonCinemachine>().enabled==true)     //if the chaaracter is the player
+        {
+            GetComponent<NavMeshAgent>().enabled=false;          
+        }
+        else                                                        //if the chaaracter is the enemy
+        {
+            GetComponent<NavMeshAgent>().enabled=true;
+        }*/
+
     }
 
     //Added this function for animation -Zak
