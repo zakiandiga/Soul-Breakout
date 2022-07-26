@@ -7,6 +7,7 @@ using UnityEngine.AI;
 public class EnemyAI : MonoBehaviour
 {
     //Added the property mainly for animation -Zak
+    public NavMeshAgent NavMeshAgent => navMeshAgent;
     public float NavMeshSpeed => navMeshAgent.enabled ? navMeshAgent.velocity.magnitude : 0;
 
     public AIManager aIManager;

@@ -107,6 +107,11 @@ namespace ECM.Controllers
 
         #region EVENTS
         public event Action<bool> OnPossessPressed;
+        public static event Action<Vector3> OnInstantiateGhost;
+        #endregion
+
+        #region MISCFIELD
+        private CinemachineVirtualCamera virtualCam;
         #endregion
 
         #region METHODS
@@ -258,6 +263,21 @@ namespace ECM.Controllers
             OnPossessPressed?.Invoke(possess);
         }
 
+        public void OutOfBody()
+        {
+            //instantiate ghost body
+
+            OnInstantiateGhost?.Invoke(this.transform.position);
+            this.virtualCam.Priority = 1;
+
+            GhostBody.OnGhostBodyReady += DisablingControl;
+        }
+
+        private void DisablingControl(GhostBody ghostBody)
+        {
+            GhostBody.OnGhostBodyReady -= DisablingControl;
+            this.enabled = false;
+        }
         #endregion
 
         #region MONOBEHAVIOUR
@@ -310,8 +330,8 @@ namespace ECM.Controllers
                     name));
             }
 
-            var cam = GetComponentInChildren<CinemachineVirtualCamera>();
-            if (cam == null)
+            virtualCam = GetComponentInChildren<CinemachineVirtualCamera>();
+            if (virtualCam == null)
             {
                 Debug.LogError(
                     string.Format(
@@ -319,7 +339,7 @@ namespace ECM.Controllers
             }
             else
             {
-                cameraTransform = cam.transform;
+                cameraTransform = virtualCam.transform;
                 mouseLook.Init(transform, cameraTransform);
             }
         }
