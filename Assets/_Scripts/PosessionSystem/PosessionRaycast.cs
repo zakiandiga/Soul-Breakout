@@ -13,6 +13,9 @@ public class PosessionRaycast : MonoBehaviour
     [SerializeField] private Material defaultMaterial;
     private Transform _selection;
     */
+    //PROPERTIES
+    public bool CanPossess => canPossess;
+
 
     private Camera cam; //need camera reference for ScreenPointToRay
     private FirstPersonCinemachine controlPlayer;

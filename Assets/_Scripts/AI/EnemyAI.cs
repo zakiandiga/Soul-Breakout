@@ -6,40 +6,192 @@ using UnityEngine.AI;
 
 public class EnemyAI : MonoBehaviour
 {
+    //PROPERTIES
     //Added the property mainly for animation -Zak
     public NavMeshAgent NavMeshAgent => navMeshAgent;
     public float NavMeshSpeed => navMeshAgent.enabled ? navMeshAgent.velocity.magnitude : 0;
+    public bool CanSeePlayer => fieldOfViewAI.CanSeePlayer;
 
-    public AIManager aIManager;
+    //public AIManager aIManager;
     private FieldOfViewAI fieldOfViewAI; //Changed this to private
-
-    NavMeshAgent navMeshAgent;
+    private EnemyPatrol enemyPatrol;
+    private NavMeshAgent navMeshAgent;
     private Animator animator; //Added for animation -Zak
 
     [SerializeField] float chaseRange = 5f;
+
+    [SerializeField] private float patrolDistanceTolerance = 2f; //previously minRemainingDistance
+
+    [SerializeField] private float patrolSpeed = 1.5f;
     [SerializeField] private float chaseSpeed = 3.5f;
 
     [HideInInspector] public Transform objectTransform;
     
     float distanceToTarget = Mathf.Infinity;
 
-    private bool isChasing = false;
-
+    private bool isPossessing = false; //temp variable
     public event Action<bool> OnAITryPosses;
 
+    private AI_STATE AI_State = AI_STATE.IDLE;
 
-    // Start is called before the first frame update
-    void Start()
+    public enum AI_STATE
     {
-  
+        IDLE,
+        PATROL,
+        CHASING,
+        POSSESS,
+    }
+
+    #region MonoBehaviour Loops
+    // Start is called before the first frame update
+    private void Start()
+    {  
         navMeshAgent = GetComponent<NavMeshAgent>();
-
         objectTransform = GetComponent<Transform>();
-
         fieldOfViewAI = GetComponent<FieldOfViewAI>();
-
+        enemyPatrol = GetComponent<EnemyPatrol>();
         animator = GetComponentInChildren<Animator>();
 
+        navMeshAgent.autoBraking = false;
+    }
+
+    private void OnEnable()
+    {
+        enemyPatrol.enabled = true;
+    }
+
+    private void OnDisable()
+    {
+        enemyPatrol.enabled = false;
+    }
+
+    private void Update()
+    {
+        //Debug.Log(AI_State);
+        //Added this line for animation -Zak
+        if (navMeshAgent.enabled)
+        {
+            Animate();
+            StateMachine();
+        }
+    }
+    #endregion
+
+    private void StateMachine()
+    {
+        switch (AI_State)
+        {
+            case AI_STATE.IDLE:
+                Idling();
+                break;
+
+            case AI_STATE.PATROL:
+                Patroling();
+                break;
+
+            case AI_STATE.CHASING:
+                ChasePlayer();                
+                break;
+
+            case AI_STATE.POSSESS:
+
+                break;
+        }
+    }
+
+    private void Idling()
+    {
+        //EXIT to Patrol
+        if (enemyPatrol.TotalDestinationPoint > 0 && !enemyPatrol.OnDelay)
+        {
+            navMeshAgent.SetDestination(enemyPatrol.GetWayPoint());
+            //navMeshAgent.destination = enemyPatrol.GetWayPoint();
+            AI_State = AI_STATE.PATROL;
+        }
+
+        //EXIT to CHASING
+        if (fieldOfViewAI.CurrentPlayer != null && fieldOfViewAI.CanSeePlayer)
+        {
+            AI_State = AI_STATE.CHASING;
+        }
+    }
+
+    private void Patroling()
+    {
+        if (navMeshAgent.speed != patrolSpeed)
+            navMeshAgent.speed = patrolSpeed;
+
+        //EXIT to IDLE
+        if (!navMeshAgent.pathPending && navMeshAgent.remainingDistance <= navMeshAgent.stoppingDistance)
+        {
+            enemyPatrol.SetDelayBetweenPoints();
+            AI_State = AI_STATE.IDLE;
+        }
+
+        //EXIT to CHASING
+        if (fieldOfViewAI.CurrentPlayer != null && fieldOfViewAI.CanSeePlayer)
+        //Removed chaseRange from the condition
+        {
+            AI_State = AI_STATE.CHASING;
+        }
+    }
+
+    private void ChasePlayer()
+    {
+        if (navMeshAgent.speed != chaseSpeed)
+            navMeshAgent.speed = chaseSpeed;
+
+        navMeshAgent.SetDestination(fieldOfViewAI.CurrentPlayer.position);
+        //EXIT to PATROL
+        if (fieldOfViewAI.CurrentPlayer == null || !fieldOfViewAI.CanSeePlayer)
+        {
+            navMeshAgent.ResetPath();
+            AI_State = AI_STATE.PATROL;
+        }
+
+        //EXIT to POSSESS
+        if (isPossessing)
+        {
+            AI_State = AI_STATE.POSSESS;
+        }
+    }
+
+    //Later we can use this if the obstacle and navmesh already set properly
+    private void StopChasing()
+    {
+        navMeshAgent.SetDestination(fieldOfViewAI.LastPlayerPosition);
+    }
+
+    private void FollowTarget(Vector3 playerPosition)
+    {
+        distanceToTarget = Vector3.Distance(playerPosition, objectTransform.position);
+
+        if (distanceToTarget <= chaseRange || fieldOfViewAI.CanSeePlayer == true)
+        {
+            navMeshAgent.SetDestination(playerPosition);
+
+            //Debug.Log("navmeshAGENT DESTINATION " + navMeshAgent.destination);
+
+            navMeshAgent.speed = chaseSpeed;
+        }
+
+    }
+
+
+    //Added this function for animation -Zak
+    private void Animate()
+    {
+        if (animator == null)
+            return;
+
+        if (NavMeshSpeed > 0.2f)
+        {
+            animator.SetFloat("MoveSpeed", NavMeshSpeed);
+        }
+        else
+        {
+            animator.SetFloat("MoveSpeed", 0);
+        }
     }
 
     /*
@@ -63,85 +215,5 @@ public class EnemyAI : MonoBehaviour
     }
     */
 
-    private void ChasePlayer()
-    {
-        navMeshAgent.speed = chaseSpeed;
 
-        navMeshAgent.SetDestination(fieldOfViewAI.CurrentPlayer.position);
-    }
-
-    //Later we can use this if the obstacle and navmesh already set properly
-    private void StopChasing()
-    {
-        navMeshAgent.SetDestination(fieldOfViewAI.LastPlayerPosition);
-    }
-
-    private void FollowTarget(Vector3 playerPosition)
-    {       
-        distanceToTarget = Vector3.Distance(playerPosition, objectTransform.position );
-
-        if(distanceToTarget <=chaseRange || fieldOfViewAI.CanSeePlayer == true)
-        {
-            navMeshAgent.SetDestination(playerPosition);
-
-            //Debug.Log("navmeshAGENT DESTINATION " + navMeshAgent.destination);
-
-            navMeshAgent.speed = chaseSpeed;
-        }
-         
-    }
-
-    private void Update()
-    {
-        //Added this line for animation -Zak
-        if(navMeshAgent.enabled)
-        {
-            Animate();
-
-            //if there is player on sight
-            if (fieldOfViewAI.CurrentPlayer != null && 
-                (fieldOfViewAI.CanSeePlayer || fieldOfViewAI.CurrentDistance <= chaseRange))
-            {
-                if (!isChasing)
-                    isChasing = true;
-
-                ChasePlayer();
-            }
-
-            //else if player is out of sight
-            else
-            {
-                if(isChasing) //check if isChasing is true (to make sure we only check this once on exit chasing)
-                {
-                    isChasing = false;
-                    navMeshAgent.ResetPath();
-                    //StopChasing();
-
-                }
-            }
-        }
-    }
-
-    //Added this function for animation -Zak
-    private void Animate()
-    {
-        if (animator == null)
-            return;
-
-        if(NavMeshSpeed > 0.2f)
-        {
-            if(!animator.GetBool("IsRunning"))
-            {
-                animator.SetBool("IsRunning", true);
-            }
-        }
-        else
-        {
-            if (animator.GetBool("IsRunning"))
-            {
-                animator.SetBool("IsRunning", false);
-            }
-        }
-
-    }
 }
