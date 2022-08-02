@@ -1,5 +1,5 @@
 using System;
-using System.Collections.Generic;
+using System.Collections;
 using UnityEngine;
 using Cinemachine;
 using ECM.Controllers;
@@ -11,10 +11,12 @@ public class GhostBody : MonoBehaviour
 
     public static event Action<GhostBody> OnGhostBodyReady; 
 
-    private void Start()
+    private IEnumerator Start()
     {
         control = GetComponent<FirstPersonCinemachine>();
         virtualCam = GetComponentInChildren<CinemachineVirtualCamera>();
+        
+        yield return new WaitForSeconds(1.2f);
 
         OnGhostBodyReady?.Invoke(this);
         virtualCam.Priority = 10;

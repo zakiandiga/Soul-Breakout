@@ -19,7 +19,7 @@ public class PosessionRaycast : MonoBehaviour
 
     private Camera cam; //need camera reference for ScreenPointToRay
     private FirstPersonCinemachine controlPlayer;
-    private EnemyAI controlAI;
+    private EnemyAI enemyAI;
 
     private CinemachineVirtualCamera currentVirtualCamera;
 
@@ -31,6 +31,7 @@ public class PosessionRaycast : MonoBehaviour
 
     private bool isPossessing = false;
     private bool canPossess = true;
+    private bool possessMode;
 
     public ParticleSystem Laser;
     //public ParticleSystem LaserPrefab;
@@ -54,35 +55,56 @@ public class PosessionRaycast : MonoBehaviour
         //targetPossessionRaycast = null;
 
         controlPlayer ??= GetComponent<FirstPersonCinemachine>();
-        controlAI ??= GetComponent<EnemyAI>();
+        enemyAI ??= GetComponent<EnemyAI>();
         controlPlayer.OnPossessPressed += TryPossess;
         
-        if(controlAI != null)
-            controlAI.OnAITryPosses += TryPossess;
+        if(enemyAI != null)
+            enemyAI.OnAITryPosses += TryPossess;
     }
 
     private void OnDisable()
     {
         controlPlayer.OnPossessPressed -= TryPossess;
 
-        if (controlAI != null)
-            controlAI.OnAITryPosses -= TryPossess;
+        if (enemyAI != null)
+            enemyAI.OnAITryPosses -= TryPossess;
 
     }
 
-    public void TryPossess(bool playerMode) //TRUE = player | FALSE = AI
+    public void TryPossess(bool playerPossessing) //TRUE = player | FALSE = AI
     {
-        Ray ray;
-        RaycastHit hit;
+        possessMode = playerPossessing;
 
-        if (!playerMode) //AI is trying to possess
+
+        if (!possessMode) //AI is trying to possess
         {
+            /*
             if(!canPossess)
             {
                 Debug.Log("AI possess on cooldown");
                 return;
             }
+            */
+            if(!isPossessing)
+            {
+                targetPossess = enemyAI.CurrentPlayer;
+                if(targetPossess.TryGetComponent(out FirstPersonCinemachine targetPossessControl))
+                {
+                    targetControl = targetPossessControl;
+                    targetEnemyAI = targetControl.GetComponent<EnemyAI>();
 
+                    PossessParticleFXStart();
+                    AIPossessing();
+                }
+
+                else
+                {
+                    Debug.Log("Target Cannot be possessed");
+                    isPossessing = false;
+                }
+            }
+
+            /*
             ray = new Ray (currentVirtualCamera.transform.position, currentVirtualCamera.transform.forward);
             Debug.DrawRay(ray.origin, ray.direction, Color.blue);
 
@@ -96,7 +118,7 @@ public class PosessionRaycast : MonoBehaviour
                     {
                         targetControl = targetPossessControl;
 
-                        PosessParticleFXStart();
+                        PossessParticleFXStart();
                         AIPossessing();
                     }
 
@@ -107,10 +129,13 @@ public class PosessionRaycast : MonoBehaviour
                     }
                 }
             }
+            */
         }
 
         else //Player is trying to possess
         {
+            Ray ray;
+            RaycastHit hit;
             ray = cam.ScreenPointToRay(new Vector3(Screen.width / 2f, Screen.height / 2f, 0f));  //crosshair
             Debug.DrawRay(ray.origin, ray.direction * 500, Color.red);
 
@@ -127,7 +152,7 @@ public class PosessionRaycast : MonoBehaviour
                         targetControl = targetPossessControl;
                         targetEnemyAI = targetControl.GetComponent<EnemyAI>();
 
-                        PosessParticleFXStart();
+                        PossessParticleFXStart();
                         Invoke("PlayerPossessing", 1.0f);
                     }
 
@@ -138,12 +163,10 @@ public class PosessionRaycast : MonoBehaviour
                     }
                 }
             }
-        }
-
-        
+        }        
     }
 
-    void PosessParticleFXStart()
+    void PossessParticleFXStart()
     {
         Laser.transform.LookAt(targetPossess);
         Laser.Play();
@@ -159,7 +182,7 @@ public class PosessionRaycast : MonoBehaviour
         canPossess = false;
 
         targetControl.OutOfBody();
-        isPossessing = false;
+        CinemachineBlendMonitor.OnCameraBlendFinished += FinalizePossess;
 
         Invoke("PossessingCooldown", possessionCooldownTime);
     }
@@ -185,12 +208,23 @@ public class PosessionRaycast : MonoBehaviour
         CinemachineBlendMonitor.OnCameraBlendFinished -= FinalizePossess;
         //CinemachineBlendMonitor.OnCameraBlendFinished += PosessParticleFXStop;
 
-        targetVirtualCamera.transform.rotation = targetVirtualCamera.transform.parent.rotation;
 
-        targetEnemyAI.NavMeshAgent.enabled = false;
-        targetEnemyAI.enabled = false;
-        targetControl.enabled = true;
-        //targetPossessionRaycast.enabled = true;
+        if(possessMode)
+        {
+            targetVirtualCamera.transform.rotation = targetVirtualCamera.transform.parent.rotation;
+            targetEnemyAI.NavMeshAgent.enabled = false;
+            targetEnemyAI.enabled = false;
+            targetControl.enabled = true;
+            //targetPossessionRaycast.enabled = true;
+        }
+
+        else
+        {
+            targetEnemyAI.NavMeshAgent.enabled = true;
+            targetEnemyAI.enabled = true;
+            targetControl.enabled = false;
+        }
+
 
         isPossessing = false;
 

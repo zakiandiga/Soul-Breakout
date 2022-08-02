@@ -103,6 +103,7 @@ namespace ECM.Controllers
         public int CharacterCode => characterCode;
 
         [SerializeField] private int characterCode = 1;
+        [SerializeField] private GameObject ghostBody;
         #endregion
 
         #region EVENTS
@@ -266,9 +267,11 @@ namespace ECM.Controllers
         public void OutOfBody()
         {
             //instantiate ghost body
+            Debug.Log(gameObject.name + " POSSESSED, out og body now");
+            //OnInstantiateGhost?.Invoke(this.transform.position);
+            Instantiate(ghostBody, transform.position - (transform.forward *2), this.transform.rotation);
 
-            OnInstantiateGhost?.Invoke(this.transform.position);
-            this.virtualCam.Priority = 1;
+            this.enabled = false;
 
             GhostBody.OnGhostBodyReady += DisablingControl;
         }
@@ -276,7 +279,7 @@ namespace ECM.Controllers
         private void DisablingControl(GhostBody ghostBody)
         {
             GhostBody.OnGhostBodyReady -= DisablingControl;
-            this.enabled = false;
+            this.virtualCam.Priority = 1;
         }
         #endregion
 
