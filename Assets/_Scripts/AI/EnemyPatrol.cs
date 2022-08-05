@@ -5,59 +5,83 @@ using UnityEngine.AI;
 
 public class EnemyPatrol : MonoBehaviour
 {
-    [SerializeField] private List<Transform> points;
+    public bool OnDelay => onDelay;
+    public int TotalDestinationPoint => totalDestinationPoint;
+
+    [SerializeField] private List<Transform> wayPoints;
     [SerializeField] private float minRemainingDistance = 0.5f;
     [SerializeField] private float patrollingSpeed = 1.5f;
-    private int destinationPoint = 0;
-    private NavMeshAgent agent;
+    private int totalDestinationPoint;
+    private int currentDestinationPoint = 0;
+    //private NavMeshAgent agent;
 
+    private float idleTime;
+    private bool onDelay = false;
 
     // Start is called before the first frame update
     void Start()
     {
-        agent = GetComponent<NavMeshAgent>();
-        agent.autoBraking = false;
+        //agent = GetComponent<NavMeshAgent>();
+        //agent.autoBraking = false;
 
-        GoToNextPoint();      
-        
+        //GoToNextPoint();      
+
+        totalDestinationPoint = wayPoints.Count;
     }
 
     void GoToNextPoint()
     {
 
-        if(points.Count==0)
+        if(wayPoints.Count==0)
         {
             Debug.LogError("need atleast one destination point");
             enabled = false;
             return;
         }
 
-        agent.destination = points[destinationPoint].position;
+        //agent.destination = wayPoints[totalDestinationPoint].position;
 
        // Debug.Log("navmeshAGENT DESTINATION " + agent.destination);
 
 
 
-        destinationPoint = (destinationPoint+1) % points.Count;  //looping through iterator
+        totalDestinationPoint = (totalDestinationPoint+1) % wayPoints.Count;  //looping through iterator
 
     }
 
-    // Update is called once per frame
-    void Update()
+    public Vector3 GetWayPoint()
     {
-        agent.speed = patrollingSpeed;
-
-        if(!agent.pathPending && agent.remainingDistance < minRemainingDistance)
+        if(wayPoints.Count <= 0)
         {
-             Debug.Log("to next point called");
-            GoToNextPoint();           
+            Debug.LogError("No way point set");
+            return transform.position;
         }
-
-       // Debug.Log("PAth status: " + agent.pathStatus);
-
-
-       // Debug.Log("agent destinaation: " + agent.destination);
-
         
+
+        if (currentDestinationPoint == totalDestinationPoint)
+            currentDestinationPoint = 0;
+
+        Debug.Log("current destination point: " + currentDestinationPoint);
+
+        return wayPoints[currentDestinationPoint].position;
     }
+
+    public void SetDelayBetweenPoints()
+    {
+        if(!onDelay)
+        {
+            onDelay = true;
+            currentDestinationPoint += 1;
+            StartCoroutine(WaitBetweenPoints());
+        }
+    }    
+
+    private IEnumerator WaitBetweenPoints()
+    {
+        idleTime = Random.Range(0.5f, 3f);
+
+        yield return new WaitForSeconds(idleTime);
+        onDelay = false;
+    }
+
 }

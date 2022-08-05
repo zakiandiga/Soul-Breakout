@@ -103,10 +103,16 @@ namespace ECM.Controllers
         public int CharacterCode => characterCode;
 
         [SerializeField] private int characterCode = 1;
+        [SerializeField] private GameObject ghostBody;
         #endregion
 
         #region EVENTS
         public event Action<bool> OnPossessPressed;
+        public static event Action<Vector3> OnInstantiateGhost;
+        #endregion
+
+        #region MISCFIELD
+        private CinemachineVirtualCamera virtualCam;
         #endregion
 
         #region METHODS
@@ -258,6 +264,23 @@ namespace ECM.Controllers
             OnPossessPressed?.Invoke(possess);
         }
 
+        public void OutOfBody()
+        {
+            //instantiate ghost body
+            Debug.Log(gameObject.name + " POSSESSED, out og body now");
+            //OnInstantiateGhost?.Invoke(this.transform.position);
+            Instantiate(ghostBody, transform.position - (transform.forward *2), this.transform.rotation);
+
+            this.enabled = false;
+
+            GhostBody.OnGhostBodyReady += DisablingControl;
+        }
+
+        private void DisablingControl(GhostBody ghostBody)
+        {
+            GhostBody.OnGhostBodyReady -= DisablingControl;
+            this.virtualCam.Priority = 1;
+        }
         #endregion
 
         #region MONOBEHAVIOUR
@@ -310,8 +333,8 @@ namespace ECM.Controllers
                     name));
             }
 
-            var cam = GetComponentInChildren<CinemachineVirtualCamera>();
-            if (cam == null)
+            virtualCam = GetComponentInChildren<CinemachineVirtualCamera>();
+            if (virtualCam == null)
             {
                 Debug.LogError(
                     string.Format(
@@ -319,7 +342,7 @@ namespace ECM.Controllers
             }
             else
             {
-                cameraTransform = cam.transform;
+                cameraTransform = virtualCam.transform;
                 mouseLook.Init(transform, cameraTransform);
             }
         }

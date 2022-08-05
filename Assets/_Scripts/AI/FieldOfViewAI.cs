@@ -15,6 +15,7 @@ public class FieldOfViewAI : MonoBehaviour
     [Range(0,360)] public float angle;
 
     private Transform target;
+    private FirstPersonCinemachine targetControl;
 
     [HideInInspector] public GameObject[] playerRefs;
     [HideInInspector] public GameObject playerRef;
@@ -75,13 +76,14 @@ public class FieldOfViewAI : MonoBehaviour
 
     private void VisionCheck()
     {
-        Debug.Log("VisionCheck");
+        //Debug.Log("VisionCheck");
         currentDistance = Vector3.Distance(transform.position, target.position);
 
-        if(currentDistance > radius)
+        if(currentDistance > radius || !targetControl.enabled)
         {
             lastPlayerPosition = target.position;
 
+            target = null;
             playerInRange = false;
 
             if (canSeePlayer)
@@ -107,14 +109,17 @@ public class FieldOfViewAI : MonoBehaviour
 
     private void CheckPlayer()
     {
-        Debug.Log("Player Check");
+        //Debug.Log("Player Check");
         Collider[] collidedCharacters = Physics.OverlapSphere(transform.position, radius, targetMask);
 
-        Debug.Log("Colliding characters: " + collidedCharacters.Length);
+        //Debug.Log("Colliding characters: " + collidedCharacters.Length);
         if(collidedCharacters.Length <= 0)
         {
             if (target != null)
+            {
+                targetControl = null;
                 target = null;
+            }
 
             if(playerInRange != false)
                 playerInRange = false;
@@ -138,7 +143,11 @@ public class FieldOfViewAI : MonoBehaviour
                 foreach (FirstPersonCinemachine targetToChoose in potentialTargets)
                 {
                     if (targetToChoose.enabled && (target != targetToChoose.transform || target == null))
+                    {
                         target = targetToChoose.transform;
+                        targetControl = target.GetComponent<FirstPersonCinemachine>();
+                    }
+          
 
                 }
 
