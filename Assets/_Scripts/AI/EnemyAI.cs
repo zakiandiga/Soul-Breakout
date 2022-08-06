@@ -192,6 +192,16 @@ public class EnemyAI : MonoBehaviour
                 PossessExecution();
             }
         }
+
+        /*if(GetComponent<FirstPersonCinemachine>().enabled==true)     //if the chaaracter is the player
+        {
+            GetComponent<NavMeshAgent>().enabled=false;          
+        }
+        else                                                        //if the chaaracter is the enemy
+        {
+            GetComponent<NavMeshAgent>().enabled=true;
+        }*/
+
     }
 
     private void PossessExecution()
