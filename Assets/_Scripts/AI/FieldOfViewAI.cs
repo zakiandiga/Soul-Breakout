@@ -90,14 +90,14 @@ public class FieldOfViewAI : MonoBehaviour
                 canSeePlayer = false;
         }
 
-        else if(currentDistance <= radius)
+        else if(currentDistance <= radius && targetControl.PlayerNoticable)
         {
             Vector3 directionToTarget = (target.position - transform.position).normalized;
 
             if (Vector3.Angle(transform.forward, directionToTarget) < angle / 2)     //if angle btwn (normal & target) < Viewing_angle/2 (=> player is in the FOV)
             {           
 
-                if (!Physics.Raycast(transform.position, directionToTarget, currentDistance, obstructionMask))   //if there is not an obstacle btwn player & enemy
+                if (!Physics.Raycast(transform.position, directionToTarget, currentDistance, obstructionMask))   //if there is no obstacle btwn player & enemy
                 {
                     if(!canSeePlayer)
                         canSeePlayer = true;

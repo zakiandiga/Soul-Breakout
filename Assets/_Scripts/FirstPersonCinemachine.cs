@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 using Cinemachine;
 
@@ -24,7 +25,7 @@ namespace ECM.Controllers
 
         [Tooltip("Speed multiplier while running.")]
         [SerializeField]
-        private float _runSpeedMultiplier = 2.0f;        
+        private float _runSpeedMultiplier = 2.0f;
         #endregion
 
         #region PROPERTIES
@@ -32,6 +33,7 @@ namespace ECM.Controllers
         /// <summary>
         /// Cached camera pivot transform.
         /// </summary>
+        public bool PlayerNoticable => playerNoticable;
 
         public Transform cameraPivotTransform { get; private set; }
 
@@ -104,6 +106,9 @@ namespace ECM.Controllers
 
         [SerializeField] private int characterCode = 1;
         [SerializeField] private GameObject ghostBody;
+
+        [SerializeField] private float noticableCooldown = 6f;
+        private bool playerNoticable = false;
         #endregion
 
         #region EVENTS
@@ -347,10 +352,26 @@ namespace ECM.Controllers
             }
         }
 
+        private IEnumerator CountNoticableTime()
+        {
+            yield return new WaitForSeconds(noticableCooldown);
+            playerNoticable = true;
+
+        }
+
+        private void OnEnable()
+        {
+            if (!playerNoticable)
+                StartCoroutine(CountNoticableTime());
+        }
+
         private void OnDisable()
         {
             if(IsPossessing)
                 IsPossessing = false;
+
+            if (playerNoticable)
+                playerNoticable = false;
         }
 
         public override void Update()
