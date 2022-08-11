@@ -26,7 +26,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &94529833629367556
 Transform:
   m_ObjectHideFlags: 0
@@ -173,6 +173,7 @@ MonoBehaviour:
   _strafeSpeed: 4
   _runSpeedMultiplier: 2
   characterCode: 1
+  ghostBody: {fileID: 3466466367693950434, guid: 8b8a60e45e63b42489824794cccaab42, type: 3}
 --- !u!114 &94529833629367557
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -202,10 +203,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3219d3cee4984c347952a97c329bef19, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  aIManager: {fileID: 0}
-  fieldOfViewAI: {fileID: 2050646576}
   chaseRange: 5
+  patrolDistanceTolerance: 2
+  possessingDistance: 5
+  patrolSpeed: 1.5
   chaseSpeed: 3.5
+  possessingCooldown: 5
   objectTransform: {fileID: 0}
 --- !u!195 &7798686415043989230
 NavMeshAgent:
@@ -241,7 +244,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb2336831ccfded4dae86c4328ae9ebf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  points: []
+  wayPoints: []
   minRemainingDistance: 1.15
   patrollingSpeed: 1.77
 --- !u!114 &2050646576
@@ -266,7 +269,6 @@ MonoBehaviour:
   obstructionMask:
     serializedVersion: 2
     m_Bits: 64
-  canSeePlayer: 0
 --- !u!1 &94529834560184404
 GameObject:
   m_ObjectHideFlags: 0

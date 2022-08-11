@@ -88,7 +88,7 @@ public class PosessionRaycast : MonoBehaviour
             if(!isPossessing)
             {
                 targetPossess = enemyAI.CurrentPlayer;
-                if(targetPossess.TryGetComponent(out FirstPersonCinemachine targetPossessControl))
+                if(targetPossess != null && targetPossess.TryGetComponent(out FirstPersonCinemachine targetPossessControl))
                 {
                     targetControl = targetPossessControl;
                     targetEnemyAI = targetControl.GetComponent<EnemyAI>();
@@ -208,13 +208,21 @@ public class PosessionRaycast : MonoBehaviour
         CinemachineBlendMonitor.OnCameraBlendFinished -= FinalizePossess;
         //CinemachineBlendMonitor.OnCameraBlendFinished += PosessParticleFXStop;
 
+        var GhostBody = GetComponent<GhostBody>();
 
-        if(possessMode)
+        if (possessMode)
         {
             targetVirtualCamera.transform.rotation = targetVirtualCamera.transform.parent.rotation;
             targetEnemyAI.NavMeshAgent.enabled = false;
             targetEnemyAI.enabled = false;
             targetControl.enabled = true;
+
+
+            if (this.enemyAI != null)
+            {
+                this.enemyAI.NavMeshAgent.enabled = true;
+                this.enemyAI.enabled = true;
+            }
             //targetPossessionRaycast.enabled = true;
         }
 
@@ -233,8 +241,7 @@ public class PosessionRaycast : MonoBehaviour
         targetVirtualCamera = null;
         targetEnemyAI = null;
 
-        var GhostBody = GetComponent<GhostBody>();
-        if(GhostBody != null)
+        if (GhostBody != null)
         {
             Destroy(this.gameObject);
         }

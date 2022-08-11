@@ -63,8 +63,9 @@ public class EnemyAI : MonoBehaviour
 
     private void OnEnable()
     {
-        if (enemyPatrol != null)
+        if (enemyPatrol != null && !enemyPatrol.enabled)
             enemyPatrol.enabled = true;
+
     }
 
     private void OnDisable()
@@ -174,10 +175,9 @@ public class EnemyAI : MonoBehaviour
     {
         if (decidingPossess)
         {
-            int decision = UnityEngine.Random.Range(0, 2);
-            bool tryPossessing = decision > 0; //TRUE = will possess | FALSE = won't possess
+            bool tryPossessing = UnityEngine.Random.value >= 0.5f; //TRUE = will possess | FALSE = won't possess
 
-            Debug.Log(decision);
+            Debug.Log(tryPossessing);
             if (!tryPossessing || possessOnCooldown) //AI decide not to possess
             {
                 Debug.Log("I don't want to possess");
