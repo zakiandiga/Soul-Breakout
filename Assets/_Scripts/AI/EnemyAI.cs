@@ -19,6 +19,7 @@ public class EnemyAI : MonoBehaviour
     private EnemyPatrol enemyPatrol;
     private NavMeshAgent navMeshAgent;
     private Animator animator; //Added for animation -Zak
+    public GameObject alert;
 
     [SerializeField] float chaseRange = 5f; //not used in new system (directly use NavMeshAgent StoppingDistance)
 
@@ -81,6 +82,15 @@ public class EnemyAI : MonoBehaviour
         {
             Animate();
             StateMachine();
+        }
+
+        if(CanSeePlayer)
+        {
+            alert.SetActive(true);
+        }
+        else
+        {
+            alert.SetActive(false);
         }
     }
     #endregion

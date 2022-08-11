@@ -19,4 +19,10 @@ public class Sounds : MonoBehaviour
     {
         
     }
+
+    public void PlayFootstep()
+    {
+        
+
+    }
 }
