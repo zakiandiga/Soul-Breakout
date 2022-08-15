@@ -78,7 +78,7 @@ public class EnemyPatrol : MonoBehaviour
 
     private IEnumerator WaitBetweenPoints()
     {
-        idleTime = Random.Range(0.5f, 3f);
+        idleTime = Random.Range(0.2f, 0.5f);
 
         yield return new WaitForSeconds(idleTime);
         onDelay = false;
