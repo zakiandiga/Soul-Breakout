@@ -104,6 +104,8 @@ namespace ECM.Controllers
 
         public int CharacterCode => characterCode;
 
+        private float moveSpeed => movement.cachedRigidbody.velocity.magnitude;
+
         [SerializeField] private int characterCode = 1;
         [SerializeField] private GameObject ghostBody;
 
@@ -129,18 +131,14 @@ namespace ECM.Controllers
 
             if(moveDirection != Vector3.zero)
             {
-                if(!animator.GetBool("IsRunning"))
-                {
-                    animator.SetBool("IsRunning", true);
-                }
+                animator.SetFloat("MoveSpeed", moveSpeed);
+
 
             }
             else
             {
-                if (animator.GetBool("IsRunning"))
-                {
-                    animator.SetBool("IsRunning", false);
-                }
+                animator.SetFloat("MoveSpeed", 0);
+
             }
         }
 
