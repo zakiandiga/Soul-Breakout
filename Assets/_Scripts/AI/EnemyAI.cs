@@ -27,14 +27,14 @@ public class EnemyAI : MonoBehaviour
     [SerializeField] private float possessingDistance = 5f;
     [SerializeField] private float patrolSpeed = 1.5f;
     [SerializeField] private float chaseSpeed = 3.5f;
+    [SerializeField] private float readyPossessionTimer = 5f;
     [SerializeField] private float possessingCooldown = 5f;
 
     [HideInInspector] public Transform objectTransform;
 
     float distanceToTarget = Mathf.Infinity;
-
+    private bool readyToPossess = false;
     private bool decidingPossess = false; //temp variable
-
     private bool possessOnCooldown = false;
 
     public event Action<bool> OnAITryPosses;
@@ -124,13 +124,17 @@ public class EnemyAI : MonoBehaviour
         if (enemyPatrol.TotalDestinationPoint > 0 && !enemyPatrol.OnDelay)
         {
             navMeshAgent.SetDestination(enemyPatrol.GetWayPoint());
-            //navMeshAgent.destination = enemyPatrol.GetWayPoint();
             AI_State = AI_STATE.PATROL;
         }
 
         //EXIT to CHASING
         if (CurrentPlayer != null && CanSeePlayer)
         {
+            if (!readyToPossess)
+            {
+                StartCoroutine(ReadyingPossession());
+            }
+
             AI_State = AI_STATE.CHASING;
         }
     }
@@ -149,8 +153,12 @@ public class EnemyAI : MonoBehaviour
 
         //EXIT to CHASING
         if (CurrentPlayer != null && CanSeePlayer)
-        //Removed chaseRange from the condition
         {
+            if(!readyToPossess)
+            {
+                StartCoroutine(ReadyingPossession());
+            }
+
             AI_State = AI_STATE.CHASING;
         }
     }
@@ -171,14 +179,12 @@ public class EnemyAI : MonoBehaviour
         }
 
         //EXIT to POSSESS
-        if (navMeshAgent.remainingDistance <= possessingDistance)
+        if (navMeshAgent.remainingDistance <= possessingDistance && readyToPossess)
         {
             navMeshAgent.ResetPath();
             decidingPossess = true;
             AI_State = AI_STATE.POSSESS;
         }
-
-
     }
 
     private void PossessDecision()
@@ -202,23 +208,22 @@ public class EnemyAI : MonoBehaviour
                 PossessExecution();
             }
         }
-
-        /*if(GetComponent<FirstPersonCinemachine>().enabled==true)     //if the chaaracter is the player
-        {
-            GetComponent<NavMeshAgent>().enabled=false;          
-        }
-        else                                                        //if the chaaracter is the enemy
-        {
-            GetComponent<NavMeshAgent>().enabled=true;
-        }*/
-
     }
 
     private void PossessExecution()
     {
         OnAITryPosses?.Invoke(false);
         possessOnCooldown = true;
+        readyToPossess = false;
         StartCoroutine(PossessCooldownTimer());
+    }
+
+    private IEnumerator ReadyingPossession()
+    {
+        Debug.Log("Readying possession!");
+        yield return new WaitForSeconds(readyPossessionTimer);
+        Debug.Log("I'M READY TO POSSESS");
+        readyToPossess = true;
     }
 
     private IEnumerator PossessCooldownTimer()
@@ -229,25 +234,22 @@ public class EnemyAI : MonoBehaviour
         ExitFromPossessing();
     }
 
-    private IEnumerator PossessTransitionDelay()
-    {
-        float transitionDelay = UnityEngine.Random.Range(1.5f, 3f);
-
-        yield return new WaitForSeconds(transitionDelay);
-
-        ExitFromPossessing();
-    }
 
     private void ExitFromPossessing()
     {
         if (CurrentPlayer != null && CanSeePlayer)
         {
             Debug.Log("Go back chasing again");
+            if (!readyToPossess)
+            {
+                StartCoroutine(ReadyingPossession());
+            }
             AI_State = AI_STATE.CHASING;
         }
         else
         {
             Debug.Log("Player is gone");
+            possessOnCooldown = false;
             AI_State = AI_STATE.IDLE;
         }
     }
@@ -266,13 +268,9 @@ public class EnemyAI : MonoBehaviour
         {
             navMeshAgent.SetDestination(playerPosition);
 
-            //Debug.Log("navmeshAGENT DESTINATION " + navMeshAgent.destination);
-
             navMeshAgent.speed = chaseSpeed;
         }
-
     }
-
 
     //Added this function for animation -Zak
     private void Animate()
@@ -282,6 +280,7 @@ public class EnemyAI : MonoBehaviour
 
         if (NavMeshSpeed > 0.2f)
         {
+            Debug.Log(NavMeshSpeed);
             animator.SetFloat("MoveSpeed", NavMeshSpeed);
         }
         else
@@ -289,25 +288,4 @@ public class EnemyAI : MonoBehaviour
             animator.SetFloat("MoveSpeed", 0);
         }
     }
-
-    /*
-    // Update is called once per frame
-    void LateUpdate()
-    {
-        if(GetComponent<FirstPersonCinemachine>().enabled==true)     //if the chaaracter is the player
-        {
-            GetComponent<NavMeshAgent>().enabled=false;
-            Vector3 dumpLoc = aIManager.WhereIsPlayer(objectTransform.position);            
-        }
-        else                                                        //if the chaaracter is the enemy
-        {
-            GetComponent<NavMeshAgent>().enabled=true;
-            Vector3 playerPosition  = aIManager.WhereIsPlayer(new Vector3 (0f,0f,0f));
-            FollowTarget(playerPosition); 
-        }
-
-
-        //Debug.Log("distance to target: " + distanceToTarget);           
-    }
-    */
 }

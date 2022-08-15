@@ -4,25 +4,23 @@ using UnityEngine;
 
 public class Sounds : MonoBehaviour
 {
-    private AudioSource PlayerAudio;
-    public AudioClip footstep;
+    private AudioSource playerAudio;
+    public AudioClip footStep;
 
     // Start is called before the first frame update
     void Start()
     {
-        PlayerAudio = GetComponent<AudioSource>();
+        playerAudio = GetComponent<AudioSource>();
         
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+
 
     public void PlayFootstep()
     {
-        
+        playerAudio.PlayOneShot(footStep);
+        Debug.Log("Play footstep!");
+
 
     }
 }

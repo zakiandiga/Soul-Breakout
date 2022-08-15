@@ -78,13 +78,6 @@ public class PosessionRaycast : MonoBehaviour
 
         if (!possessMode) //AI is trying to possess
         {
-            /*
-            if(!canPossess)
-            {
-                Debug.Log("AI possess on cooldown");
-                return;
-            }
-            */
             if(!isPossessing)
             {
                 targetPossess = enemyAI.CurrentPlayer;
@@ -102,34 +95,7 @@ public class PosessionRaycast : MonoBehaviour
                     Debug.Log("Target Cannot be possessed");
                     isPossessing = false;
                 }
-            }
-
-            /*
-            ray = new Ray (currentVirtualCamera.transform.position, currentVirtualCamera.transform.forward);
-            Debug.DrawRay(ray.origin, ray.direction, Color.blue);
-
-            if (Physics.Raycast(ray, out hit, possessRange, possessingRaycastLayer))
-            {
-                if (!isPossessing)
-                {
-                    targetPossess = hit.transform;
-                    isPossessing = true;
-                    if (targetPossess.TryGetComponent(out FirstPersonCinemachine targetPossessControl))
-                    {
-                        targetControl = targetPossessControl;
-
-                        PossessParticleFXStart();
-                        AIPossessing();
-                    }
-
-                    else
-                    {
-                        Debug.Log("Target cannot be possessed!");
-                        isPossessing = false;
-                    }
-                }
-            }
-            */
+            }            
         }
 
         else //Player is trying to possess
@@ -148,12 +114,20 @@ public class PosessionRaycast : MonoBehaviour
                     isPossessing = true;
                     if (targetPossess.TryGetComponent(out FirstPersonCinemachine targetPossessControl))
                     {
-
                         targetControl = targetPossessControl;
                         targetEnemyAI = targetControl.GetComponent<EnemyAI>();
 
-                        PossessParticleFXStart();
-                        Invoke("PlayerPossessing", 1.0f);
+                        if(targetEnemyAI.CanSeePlayer)
+                        {
+                            Debug.Log("CANNOT POSSESS, ENEMY CAN SEE PLAYER");
+                        }
+                        else
+                        {
+                            Debug.Log("PLAYER POSSESS!");
+                            PossessParticleFXStart();
+                            Invoke("PlayerPossessing", 1.0f);
+
+                        }
                     }
 
                     else
@@ -163,7 +137,7 @@ public class PosessionRaycast : MonoBehaviour
                     }
                 }
             }
-        }        
+        }
     }
 
     void PossessParticleFXStart()
