@@ -1283,7 +1283,7 @@ public class AstarPath : VersionedMonoBehaviour {
 		};
 
 		pathProcessor.OnPathPostSearch += path => {
-			LogPathResults(path);
+			LogPathResults(path); //pathfinder result log!!
 			var tmp = OnPathPostSearch;
 			if (tmp != null) tmp(path);
 		};

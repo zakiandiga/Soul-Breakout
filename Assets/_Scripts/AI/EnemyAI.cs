@@ -3,21 +3,25 @@ using System.Collections;
 using ECM.Controllers;
 using UnityEngine;
 using UnityEngine.AI;
+using Pathfinding;
 
 
 public class EnemyAI : MonoBehaviour
 {
     //PROPERTIES
     //Added the property mainly for animation -Zak
+    public float CurrentMoveSpeed => pathfindingAI.desiredVelocity.magnitude;
     public NavMeshAgent NavMeshAgent => navMeshAgent;
     public float NavMeshSpeed => navMeshAgent.enabled ? navMeshAgent.velocity.magnitude : 0;
     public bool CanSeePlayer => fieldOfViewAI.CanSeePlayer;
     public Transform CurrentPlayer => fieldOfViewAI.CurrentPlayer;
 
+    private Rigidbody rigidBody;
     //public AIManager aIManager;
     private FieldOfViewAI fieldOfViewAI; //Changed this to private
     private EnemyPatrol enemyPatrol;
     private NavMeshAgent navMeshAgent;
+    private AIPath pathfindingAI;
     private Animator animator; //Added for animation -Zak
     public GameObject alert;
 
@@ -54,11 +58,14 @@ public class EnemyAI : MonoBehaviour
     private void Start()
     {
         navMeshAgent = GetComponent<NavMeshAgent>();
+        pathfindingAI = GetComponent<AIPath>();
+        rigidBody = GetComponent<Rigidbody>();
         objectTransform = GetComponent<Transform>();
         fieldOfViewAI = GetComponent<FieldOfViewAI>();
         enemyPatrol = GetComponent<EnemyPatrol>();
         animator = GetComponentInChildren<Animator>();
 
+        
         navMeshAgent.autoBraking = false;
     }
 
@@ -80,11 +87,13 @@ public class EnemyAI : MonoBehaviour
         //Added this line for animation -Zak
         if (navMeshAgent.enabled)
         {
-            Animate();
             StateMachine();
         }
 
-        if(CanSeePlayer)
+        Animate();
+
+
+        if (CanSeePlayer)
         {
             alert.SetActive(true);
         }
@@ -274,14 +283,15 @@ public class EnemyAI : MonoBehaviour
 
     //Added this function for animation -Zak
     private void Animate()
-    {
+    {        
         if (animator == null)
             return;
 
-        if (NavMeshSpeed > 0.2f)
+        
+        if (CurrentMoveSpeed > 0.2f)
         {
-            Debug.Log(NavMeshSpeed);
-            animator.SetFloat("MoveSpeed", NavMeshSpeed);
+            
+            animator.SetFloat("MoveSpeed", CurrentMoveSpeed);
         }
         else
         {

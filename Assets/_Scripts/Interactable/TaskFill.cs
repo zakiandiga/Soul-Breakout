@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using ECM.Controllers;
 
 public class TaskFill : Interactable
 {
@@ -10,13 +11,15 @@ public class TaskFill : Interactable
     public bool IsProgressing => isProgressing;
     public bool TaskFinished => taskFinished;
 
-    [SerializeField] private int characterCode = 1;
+    [SerializeField] private int blockCharacterCode = 1;
 
     [SerializeField] private float maxProgress = 10f;
 
     [SerializeField] private GameObject sprite;
     private Material currentMaterial;
     [SerializeField] private Material finishedMaterial;
+    [SerializeField] private Material glowMaterial;
+    [SerializeField] private Material normalMaterial;
 
     private float currentProgress = 0f;
 
@@ -27,7 +30,8 @@ public class TaskFill : Interactable
 
     private void Start()
     {
-        currentMaterial = sprite.GetComponent<MeshRenderer>().material;
+        currentMaterial = normalMaterial;
+        sprite.GetComponent<MeshRenderer>().material = currentMaterial;
         signText = sign.GetComponentInChildren<TextMeshProUGUI>();
         Debug.Log(currentMaterial);
     }
@@ -37,7 +41,7 @@ public class TaskFill : Interactable
 
         if (!isProgressing)
         {
-            if (currentInteractingPlayer.CharacterCode == characterCode)
+            if (currentInteractingPlayer.CharacterCode == blockCharacterCode)
                 isProgressing = true;
         }
     }
@@ -96,8 +100,33 @@ public class TaskFill : Interactable
             taskFinished = true;
             signText.text = "TASK ALREADY COMPLETED";
             currentMaterial = finishedMaterial;
+            sprite.GetComponent<MeshRenderer>().material = currentMaterial;
             Debug.Log(currentMaterial);
             isProgressing = false;
         }
+    }
+
+    private void UpdateMaterial(int characterCode)
+    {
+        if(blockCharacterCode == characterCode && !taskFinished)
+        {
+            currentMaterial = glowMaterial;
+            sprite.GetComponent<MeshRenderer>().material = currentMaterial;
+        }
+        else if(blockCharacterCode != characterCode && !taskFinished)
+        {
+            currentMaterial = normalMaterial;
+            sprite.GetComponent<MeshRenderer>().material = currentMaterial;
+        }
+    }
+
+    private void OnEnable()
+    {
+        FirstPersonCinemachine.OnPlayerNewBody += UpdateMaterial;
+    }
+
+    private void OnDisable()
+    {
+        FirstPersonCinemachine.OnPlayerNewBody -= UpdateMaterial;
     }
 }

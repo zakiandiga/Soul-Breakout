@@ -116,6 +116,7 @@ namespace ECM.Controllers
         #region EVENTS
         public event Action<bool> OnPossessPressed;
         public static event Action<Vector3> OnInstantiateGhost;
+        public static event Action<int> OnPlayerNewBody;
         #endregion
 
         #region MISCFIELD
@@ -359,8 +360,13 @@ namespace ECM.Controllers
 
         private void OnEnable()
         {
+            OnPlayerNewBody?.Invoke(CharacterCode);
+
             if (!playerNoticable)
                 StartCoroutine(CountNoticableTime());
+
+            if(movement.cachedRigidbody != null)
+                movement.cachedRigidbody.useGravity = false;
         }
 
         private void OnDisable()
@@ -370,6 +376,8 @@ namespace ECM.Controllers
 
             if (playerNoticable)
                 playerNoticable = false;
+
+            movement.cachedRigidbody.useGravity = true;
         }
 
         public override void Update()

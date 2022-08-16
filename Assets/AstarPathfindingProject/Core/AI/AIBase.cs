@@ -444,6 +444,7 @@ namespace Pathfinding {
 				Quaternion nextRotation;
 				MovementUpdate(Time.fixedDeltaTime, out nextPosition, out nextRotation);
 				FinalizeMovement(nextPosition, nextRotation);
+
 			}
 		}
 

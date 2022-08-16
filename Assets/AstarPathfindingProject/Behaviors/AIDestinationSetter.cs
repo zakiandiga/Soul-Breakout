@@ -24,6 +24,7 @@ namespace Pathfinding {
 		IAstarAI ai;
 
 
+
 		void OnEnable () {
 			ai = GetComponent<IAstarAI>();
 			// Update the destination right before searching for a path as well.
@@ -40,10 +41,11 @@ namespace Pathfinding {
 		/// <summary>Updates the AI's destination every frame</summary>
 		void Update () {
 
-			if(firstCall==true)
+			/*
+			if(firstCall)
 			{
 				endNodeNum = Random.Range(0, 8);
-				target = endPoints[endNodeNum];
+				//target = endPoints[endNodeNum];
 				firstCall = false;
 			}
 			else
@@ -52,12 +54,14 @@ namespace Pathfinding {
 				if(Vector3.Distance(transform.position,target.position)<0.5f)
 				{
 					endNodeNum = Random.Range(0, 8);
-					target = endPoints[endNodeNum];					
+					//target = endPoints[endNodeNum];					
 				}
 			}
+			*/
 
-			
-			if (target != null && ai != null) ai.destination = target.position;
+
+			if (target != null && ai != null)
+				ai.destination = target.position;
 		}
 	}
 }

@@ -19,7 +19,6 @@ public class Sounds : MonoBehaviour
     public void PlayFootstep()
     {
         playerAudio.PlayOneShot(footStep);
-        Debug.Log("Play footstep!");
 
 
     }
