@@ -184,25 +184,20 @@ public class PosessionRaycast : MonoBehaviour
 
         var GhostBody = GetComponent<GhostBody>();
 
-        if (possessMode)
+        if (possessMode) //player possessing
         {
             targetVirtualCamera.transform.rotation = targetVirtualCamera.transform.parent.rotation;
-            targetEnemyAI.NavMeshAgent.enabled = false;
             targetEnemyAI.enabled = false;
             targetControl.enabled = true;
 
-
             if (this.enemyAI != null)
             {
-                this.enemyAI.NavMeshAgent.enabled = true;
                 this.enemyAI.enabled = true;
             }
-            //targetPossessionRaycast.enabled = true;
         }
 
-        else
+        else //AI possessing
         {
-            targetEnemyAI.NavMeshAgent.enabled = true;
             targetEnemyAI.enabled = true;
             targetControl.enabled = false;
         }

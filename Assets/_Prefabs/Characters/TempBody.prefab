@@ -10183,6 +10183,7 @@ MonoBehaviour:
   _runSpeedMultiplier: 2
   characterCode: 1
   ghostBody: {fileID: 0}
+  noticableCooldown: 6
 --- !u!114 &3466466367693950458
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -25712,6 +25713,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3464569524792396559}
   - component: {fileID: 3553094650137173189}
+  - component: {fileID: 2263950508914038639}
   m_Layer: 16
   m_Name: Character_Female_NoFace_01
   m_TagString: Untagged
@@ -25759,6 +25761,19 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &2263950508914038639
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3467174781065284219}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 596a3a00fc6fdc54495df5f1a2e15b38, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  footStep: {fileID: 0}
 --- !u!1 &3467178430182646324
 GameObject:
   m_ObjectHideFlags: 0

@@ -10,16 +10,16 @@ public class EnemyAI : MonoBehaviour
 {
     //PROPERTIES
     //Added the property mainly for animation -Zak
-    public float CurrentMoveSpeed => pathfindingAI.desiredVelocity.magnitude;
+    public float CurrentMoveSpeed => navMeshAgent.enabled ? navMeshAgent.velocity.magnitude :  pathfindingAI.desiredVelocity.magnitude;
     public NavMeshAgent NavMeshAgent => navMeshAgent;
     public float NavMeshSpeed => navMeshAgent.enabled ? navMeshAgent.velocity.magnitude : 0;
     public bool CanSeePlayer => fieldOfViewAI.CanSeePlayer;
     public Transform CurrentPlayer => fieldOfViewAI.CurrentPlayer;
 
-    private Rigidbody rigidBody;
+
     //public AIManager aIManager;
     private FieldOfViewAI fieldOfViewAI; //Changed this to private
-    private EnemyPatrol enemyPatrol;
+
     private NavMeshAgent navMeshAgent;
     private AIPath pathfindingAI;
     private Animator animator; //Added for animation -Zak
@@ -34,9 +34,7 @@ public class EnemyAI : MonoBehaviour
     [SerializeField] private float readyPossessionTimer = 5f;
     [SerializeField] private float possessingCooldown = 5f;
 
-    [HideInInspector] public Transform objectTransform;
-
-    float distanceToTarget = Mathf.Infinity;
+    private bool isIdling = false;
     private bool readyToPossess = false;
     private bool decidingPossess = false; //temp variable
     private bool possessOnCooldown = false;
@@ -45,8 +43,11 @@ public class EnemyAI : MonoBehaviour
 
     private AI_STATE AI_State = AI_STATE.IDLE;
 
+    private IEnumerator idleTimer;
+
     public enum AI_STATE
     {
+        INITIALIZE,
         IDLE,
         PATROL,
         CHASING,
@@ -59,10 +60,9 @@ public class EnemyAI : MonoBehaviour
     {
         navMeshAgent = GetComponent<NavMeshAgent>();
         pathfindingAI = GetComponent<AIPath>();
-        rigidBody = GetComponent<Rigidbody>();
-        objectTransform = GetComponent<Transform>();
+       
         fieldOfViewAI = GetComponent<FieldOfViewAI>();
-        enemyPatrol = GetComponent<EnemyPatrol>();
+
         animator = GetComponentInChildren<Animator>();
 
         
@@ -71,26 +71,20 @@ public class EnemyAI : MonoBehaviour
 
     private void OnEnable()
     {
-        if (enemyPatrol != null && !enemyPatrol.enabled)
-            enemyPatrol.enabled = true;
-
+        AI_State = AI_STATE.IDLE;
     }
 
     private void OnDisable()
     {
-        enemyPatrol.enabled = false;
+        DisablingAIComponent();
     }
 
     private void Update()
     {
         //Debug.Log(AI_State);
         //Added this line for animation -Zak
-        if (navMeshAgent.enabled)
-        {
-            StateMachine();
-        }
-
         Animate();
+        StateMachine();
 
 
         if (CanSeePlayer)
@@ -103,6 +97,16 @@ public class EnemyAI : MonoBehaviour
         }
     }
     #endregion
+
+
+    private void DisablingAIComponent()
+    {
+        if (navMeshAgent.enabled)
+            navMeshAgent.enabled = false;
+
+        if (pathfindingAI.enabled)
+            pathfindingAI.enabled = false;
+    }
 
     private void StateMachine()
     {
@@ -127,47 +131,91 @@ public class EnemyAI : MonoBehaviour
         }
     }
 
+
     private void Idling()
     {
-        //EXIT to Patrol
-        if (enemyPatrol.TotalDestinationPoint > 0 && !enemyPatrol.OnDelay)
-        {
-            navMeshAgent.SetDestination(enemyPatrol.GetWayPoint());
-            AI_State = AI_STATE.PATROL;
-        }
+        if (NavMeshAgent.enabled)
+            NavMeshAgent.enabled = false;
+
+        if (!pathfindingAI.enabled)
+            pathfindingAI.enabled = true;
+
+        if (pathfindingAI.canSearch)
+            pathfindingAI.canSearch = false;
+
 
         //EXIT to CHASING
         if (CurrentPlayer != null && CanSeePlayer)
         {
+            //if the idleTime is on going, stop the coroutine
+            if (idleTimer != null)
+                StopCoroutine(idleTimer);
+
+            //start the ready possession timer
             if (!readyToPossess)
             {
                 StartCoroutine(ReadyingPossession());
             }
 
+            //switch from A*Pathfinding to Unity NavMeshAgent
+            pathfindingAI.enabled = false;
+            navMeshAgent.enabled = true;
+
+            //Change the state
             AI_State = AI_STATE.CHASING;
         }
+
+        //Exit to patrol /w A*
+        if(!isIdling)
+        {
+            Debug.Log("exit to patrol");
+
+            pathfindingAI.canSearch = true;
+
+            AI_State = AI_STATE.PATROL;
+        }
+    }
+
+    private IEnumerator IdleTimer()
+    {        
+        yield return new WaitForSeconds(UnityEngine.Random.Range(0.5f, 3f));
+
+        Debug.Log("Idling time is out, now ready to move");
+        isIdling = false;
+        idleTimer = null;
     }
 
     private void Patroling()
     {
-        if (navMeshAgent.speed != patrolSpeed)
-            navMeshAgent.speed = patrolSpeed;
-
         //EXIT to IDLE
-        if (!navMeshAgent.pathPending && navMeshAgent.remainingDistance <= navMeshAgent.stoppingDistance)
+        if(pathfindingAI.reachedEndOfPath)
         {
-            enemyPatrol.SetDelayBetweenPoints();
+            Debug.Log("AI reach the destination, now go to IDLE");
+            pathfindingAI.canSearch = false;
+            isIdling = true;
+            idleTimer = IdleTimer();
+            StartCoroutine(idleTimer);
             AI_State = AI_STATE.IDLE;
         }
 
         //EXIT to CHASING
         if (CurrentPlayer != null && CanSeePlayer)
         {
-            if(!readyToPossess)
+            //if the idleTime is on going, stop the coroutine
+            if (idleTimer != null)
+                StopCoroutine(idleTimer);
+
+            //start the ready possession timer
+            if (!readyToPossess)
             {
                 StartCoroutine(ReadyingPossession());
             }
 
+            //switch from A*Pathfinding to Unity NavMeshAgent
+            pathfindingAI.enabled = false;
+            navMeshAgent.enabled = true;
+
+            //Change the state
             AI_State = AI_STATE.CHASING;
         }
     }
@@ -180,11 +228,20 @@ public class EnemyAI : MonoBehaviour
         if (CurrentPlayer != null)
             navMeshAgent.SetDestination(CurrentPlayer.position);
 
-        //EXIT to PATROL
+
+        //EXIT to IDLE
         if (CurrentPlayer == null || !CanSeePlayer)
         {
             navMeshAgent.ResetPath();
-            AI_State = AI_STATE.PATROL;
+            isIdling = true;
+            idleTimer = IdleTimer();
+
+            navMeshAgent.enabled = false;
+            pathfindingAI.enabled = true;
+            pathfindingAI.canSearch = false;
+
+            StartCoroutine(idleTimer);
+            AI_State = AI_STATE.IDLE;
         }
 
         //EXIT to POSSESS
@@ -237,7 +294,6 @@ public class EnemyAI : MonoBehaviour
 
     private IEnumerator PossessCooldownTimer()
     {
-
         yield return new WaitForSeconds(possessingCooldown);
         possessOnCooldown = false;
         ExitFromPossessing();
@@ -259,6 +315,15 @@ public class EnemyAI : MonoBehaviour
         {
             Debug.Log("Player is gone");
             possessOnCooldown = false;
+
+            isIdling = true;
+            idleTimer = IdleTimer();
+
+            navMeshAgent.enabled = false;
+            pathfindingAI.enabled = true;
+            pathfindingAI.canSearch = false;
+
+            StartCoroutine(idleTimer);
             AI_State = AI_STATE.IDLE;
         }
     }
@@ -267,18 +332,6 @@ public class EnemyAI : MonoBehaviour
     private void StopChasing()
     {
         navMeshAgent.SetDestination(fieldOfViewAI.LastPlayerPosition);
-    }
-
-    private void FollowTarget(Vector3 playerPosition)
-    {
-        distanceToTarget = Vector3.Distance(playerPosition, objectTransform.position);
-
-        if (distanceToTarget <= chaseRange || fieldOfViewAI.CanSeePlayer == true)
-        {
-            navMeshAgent.SetDestination(playerPosition);
-
-            navMeshAgent.speed = chaseSpeed;
-        }
     }
 
     //Added this function for animation -Zak
