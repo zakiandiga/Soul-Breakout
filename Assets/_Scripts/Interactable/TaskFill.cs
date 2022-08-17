@@ -11,7 +11,7 @@ public class TaskFill : Interactable
     public bool IsProgressing => isProgressing;
     public bool TaskFinished => taskFinished;
 
-    [SerializeField] private int blockCharacterCode = 1;
+    [SerializeField] public int blockCharacterCode;
 
     [SerializeField] private float maxProgress = 10f;
 
@@ -37,7 +37,7 @@ public class TaskFill : Interactable
             
         currentMaterial = normalMaterial;
         sprite.GetComponent<MeshRenderer>().material = currentMaterial;
-        UpdateMaterial(1);
+        UpdateMaterial(0);
         signText = sign.GetComponentInChildren<TextMeshProUGUI>();
         Debug.Log(currentMaterial);
     }

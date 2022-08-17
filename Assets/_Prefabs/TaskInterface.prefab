@@ -964,7 +964,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sign: {fileID: 255177962720874294}
-  characterCode: 1
+  blockCharacterCode: 1
   maxProgress: 5
   sprite: {fileID: 255177961801951130}
   finishedMaterial: {fileID: 2100000, guid: 36ee499656568404dbcfe9d2baac9e0e, type: 2}
+  glowMaterial: {fileID: 2100000, guid: 13143415cecfd5b4783425c4344745ba, type: 2}
+  normalMaterial: {fileID: 2100000, guid: dd90fa00a0daff043a5859193bc07aba, type: 2}
