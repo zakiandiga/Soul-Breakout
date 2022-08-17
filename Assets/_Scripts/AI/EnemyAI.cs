@@ -45,6 +45,7 @@ public class EnemyAI : MonoBehaviour
     private AI_STATE AI_State = AI_STATE.IDLE;
 
     private IEnumerator idleTimer;
+    private IEnumerator readyingPossess;
 
     public enum AI_STATE
     {
@@ -140,10 +141,10 @@ public class EnemyAI : MonoBehaviour
             NavMeshAgent.enabled = false;
 
         if (!pathfindingAI.enabled)
-        {
             pathfindingAI.enabled = true;
+
+        if (!rigidBody.useGravity)
             rigidBody.useGravity = true;
-        }
 
         if (pathfindingAI.canSearch)
             pathfindingAI.canSearch = false;
@@ -159,7 +160,8 @@ public class EnemyAI : MonoBehaviour
             //start the ready possession timer
             if (!readyToPossess)
             {
-                StartCoroutine(ReadyingPossession());
+                readyingPossess = ReadyingPossession();
+                StartCoroutine(readyingPossess);
             }
 
             //switch from A*Pathfinding to Unity NavMeshAgent
@@ -214,7 +216,8 @@ public class EnemyAI : MonoBehaviour
             //start the ready possession timer
             if (!readyToPossess)
             {
-                StartCoroutine(ReadyingPossession());
+                readyingPossess = ReadyingPossession();
+                StartCoroutine(readyingPossess);
             }
 
             //switch from A*Pathfinding to Unity NavMeshAgent
@@ -239,6 +242,9 @@ public class EnemyAI : MonoBehaviour
         //EXIT to IDLE
         if (CurrentPlayer == null || !CanSeePlayer)
         {
+            if (readyingPossess != null)
+                StopCoroutine(readyingPossess);
+
             navMeshAgent.ResetPath();
             isIdling = true;
             idleTimer = IdleTimer();
@@ -253,8 +259,11 @@ public class EnemyAI : MonoBehaviour
         }
 
         //EXIT to POSSESS
-        if (navMeshAgent.remainingDistance <= possessingDistance && readyToPossess)
+        if (navMeshAgent.enabled && navMeshAgent.remainingDistance <= possessingDistance && readyToPossess)
         {
+            if (readyingPossess != null)
+                StopCoroutine(readyingPossess);
+
             navMeshAgent.ResetPath();
             decidingPossess = true;
             AI_State = AI_STATE.POSSESS;
@@ -298,6 +307,7 @@ public class EnemyAI : MonoBehaviour
         yield return new WaitForSeconds(readyPossessionTimer);
         Debug.Log("I'M READY TO POSSESS");
         readyToPossess = true;
+        readyingPossess = null;
     }
 
     private IEnumerator PossessCooldownTimer()
@@ -313,9 +323,11 @@ public class EnemyAI : MonoBehaviour
         if (CurrentPlayer != null && CanSeePlayer)
         {
             Debug.Log("Go back chasing again");
+
             if (!readyToPossess)
             {
-                StartCoroutine(ReadyingPossession());
+                readyingPossess = ReadyingPossession();
+                StartCoroutine(readyingPossess);
             }
             AI_State = AI_STATE.CHASING;
         }

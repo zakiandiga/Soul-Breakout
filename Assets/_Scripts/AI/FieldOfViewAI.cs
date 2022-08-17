@@ -97,7 +97,7 @@ public class FieldOfViewAI : MonoBehaviour
             if (Vector3.Angle(transform.forward, directionToTarget) < angle / 2)     //if angle btwn (normal & target) < Viewing_angle/2 (=> player is in the FOV)
             {           
 
-                if (!Physics.Raycast(transform.position, directionToTarget, currentDistance, obstructionMask))   //if there is no obstacle btwn player & enemy
+                if (!Physics.Raycast(transform.position + (Vector3.up * 1.59f), directionToTarget, currentDistance, obstructionMask))   //if there is no obstacle btwn player & enemy
                 {
                     if(!canSeePlayer)
                         canSeePlayer = true;

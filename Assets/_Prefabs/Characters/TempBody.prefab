@@ -10117,7 +10117,7 @@ MonoBehaviour:
   _maxLateralSpeed: 10
   _maxRiseSpeed: 20
   _maxFallSpeed: 20
-  _useGravity: 1
+  _useGravity: 0
   _gravity: {x: 0, y: -30, z: 0}
   _slideOnSteepSlope: 0
   _slopeLimit: 45
@@ -10169,19 +10169,19 @@ MonoBehaviour:
   _canCrouch: 1
   _standingHeight: 2
   _crouchingHeight: 1
-  _baseJumpHeight: 1.5
-  _extraJumpTime: 0.5
-  _extraJumpPower: 25
+  _baseJumpHeight: 0
+  _extraJumpTime: 0
+  _extraJumpPower: 0
   _jumpPreGroundedToleranceTime: 0.15
   _jumpPostGroundedToleranceTime: 0.15
-  _maxMidAirJumps: 1
+  _maxMidAirJumps: 0
   _useRootMotion: 0
   _rootMotionRotation: 0
   _forwardSpeed: 5
   _backwardSpeed: 3
   _strafeSpeed: 4
   _runSpeedMultiplier: 2
-  characterCode: 1
+  characterCode: 99
   ghostBody: {fileID: 0}
   noticableCooldown: 6
 --- !u!114 &3466466367693950458

@@ -20,6 +20,8 @@ public class GhostBody : MonoBehaviour
 
         OnGhostBodyReady?.Invoke(this);
         virtualCam.Priority = 10;
+
+        
     }
 
     

@@ -74,6 +74,9 @@ public class TaskFill : Interactable
         if (taskFinished)
             return;
 
+        if (other.GetComponent<FirstPersonCinemachine>().CharacterCode != blockCharacterCode)
+            return;
+
         base.OnTriggerEnter(other);
     }
 
@@ -82,12 +85,18 @@ public class TaskFill : Interactable
         if (taskFinished)
             return;
 
+        if (other.GetComponent<FirstPersonCinemachine>().CharacterCode != blockCharacterCode)
+            return;
+
         base.OnTriggerStay(other);
     }
 
     protected override void OnTriggerExit(Collider other)
     {
         if (taskFinished)
+            return;
+
+        if (other.GetComponent<FirstPersonCinemachine>().CharacterCode != blockCharacterCode)
             return;
 
         base.OnTriggerExit(other);

@@ -271,9 +271,9 @@ namespace ECM.Controllers
         public void OutOfBody()
         {
             //instantiate ghost body
-            Debug.Log(gameObject.name + " POSSESSED, out og body now");
+            Debug.Log(gameObject.name + " POSSESSED, out of body now");
             //OnInstantiateGhost?.Invoke(this.transform.position);
-            Instantiate(ghostBody, transform.position - (transform.forward *2), this.transform.rotation);
+            Instantiate(ghostBody, transform.position - (transform.forward), this.transform.rotation);
 
             this.enabled = false;
 
