@@ -18,6 +18,7 @@ public class EnemyAI : MonoBehaviour
 
 
     //public AIManager aIManager;
+    private Rigidbody rigidBody;
     private FieldOfViewAI fieldOfViewAI; //Changed this to private
 
     private NavMeshAgent navMeshAgent;
@@ -58,6 +59,7 @@ public class EnemyAI : MonoBehaviour
     // Start is called before the first frame update
     private void Start()
     {
+        rigidBody = GetComponent<Rigidbody>();
         navMeshAgent = GetComponent<NavMeshAgent>();
         pathfindingAI = GetComponent<AIPath>();
        
@@ -138,7 +140,10 @@ public class EnemyAI : MonoBehaviour
             NavMeshAgent.enabled = false;
 
         if (!pathfindingAI.enabled)
+        {
             pathfindingAI.enabled = true;
+            rigidBody.useGravity = true;
+        }
 
         if (pathfindingAI.canSearch)
             pathfindingAI.canSearch = false;
@@ -159,6 +164,7 @@ public class EnemyAI : MonoBehaviour
 
             //switch from A*Pathfinding to Unity NavMeshAgent
             pathfindingAI.enabled = false;
+            rigidBody.useGravity = false;
             navMeshAgent.enabled = true;
 
             //Change the state
@@ -213,6 +219,7 @@ public class EnemyAI : MonoBehaviour
 
             //switch from A*Pathfinding to Unity NavMeshAgent
             pathfindingAI.enabled = false;
+            rigidBody.useGravity = false;
             navMeshAgent.enabled = true;
 
             //Change the state
@@ -238,6 +245,7 @@ public class EnemyAI : MonoBehaviour
 
             navMeshAgent.enabled = false;
             pathfindingAI.enabled = true;
+            rigidBody.useGravity = true;
             pathfindingAI.canSearch = false;
 
             StartCoroutine(idleTimer);
