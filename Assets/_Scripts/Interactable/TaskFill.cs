@@ -28,10 +28,16 @@ public class TaskFill : Interactable
 
     private TextMeshProUGUI signText;
 
+   /* private void Awake() {
+        FirstPersonCinemachine.OnPlayerNewBody += UpdateMaterial;
+    }*/
+
     private void Start()
     {
+            
         currentMaterial = normalMaterial;
         sprite.GetComponent<MeshRenderer>().material = currentMaterial;
+        UpdateMaterial(1);
         signText = sign.GetComponentInChildren<TextMeshProUGUI>();
         Debug.Log(currentMaterial);
     }
@@ -108,6 +114,8 @@ public class TaskFill : Interactable
 
     private void UpdateMaterial(int characterCode)
     {
+        Debug.Log("character code: " + characterCode);
+
         if(blockCharacterCode == characterCode && !taskFinished)
         {
             currentMaterial = glowMaterial;
@@ -120,11 +128,12 @@ public class TaskFill : Interactable
         }
     }
 
-    private void OnEnable()
+
+private void OnEnable()
     {
         FirstPersonCinemachine.OnPlayerNewBody += UpdateMaterial;
+        
     }
-
     private void OnDisable()
     {
         FirstPersonCinemachine.OnPlayerNewBody -= UpdateMaterial;

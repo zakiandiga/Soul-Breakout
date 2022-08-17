@@ -41,7 +41,7 @@ namespace Pathfinding {
 		/// <summary>Updates the AI's destination every frame</summary>
 		void Update () {
 
-			/*
+			
 			if(firstCall)
 			{
 				endNodeNum = Random.Range(0, 8);
@@ -57,7 +57,7 @@ namespace Pathfinding {
 					//target = endPoints[endNodeNum];					
 				}
 			}
-			*/
+			
 
 
 			if (target != null && ai != null)
