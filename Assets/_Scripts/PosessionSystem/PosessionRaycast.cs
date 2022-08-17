@@ -34,6 +34,7 @@ public class PosessionRaycast : MonoBehaviour
     private bool possessMode;
 
     public ParticleSystem Laser;
+
     //public ParticleSystem LaserPrefab;
     //public Transform LaserPivot;
 

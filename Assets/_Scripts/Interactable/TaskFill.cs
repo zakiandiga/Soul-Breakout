@@ -11,15 +11,19 @@ public class TaskFill : Interactable
     public bool IsProgressing => isProgressing;
     public bool TaskFinished => taskFinished;
 
+    public ParticleSystem ghostEscape;
+
     [SerializeField] public int blockCharacterCode;
 
     [SerializeField] private float maxProgress = 10f;
 
     [SerializeField] private GameObject sprite;
+
     private Material currentMaterial;
     [SerializeField] private Material finishedMaterial;
     [SerializeField] private Material glowMaterial;
     [SerializeField] private Material normalMaterial;
+
 
     private float currentProgress = 0f;
 
@@ -104,11 +108,14 @@ public class TaskFill : Interactable
         {
             Debug.Log("Task Done");
             taskFinished = true;
-            signText.text = "TASK ALREADY COMPLETED";
+            signText.text = "Soul Saved";
+            //ghostEscape.Play();
+            Instantiate(ghostEscape, transform.position + new Vector3(0.0f,0.3f,0.0f), Quaternion.identity);
             currentMaterial = finishedMaterial;
             sprite.GetComponent<MeshRenderer>().material = currentMaterial;
             Debug.Log(currentMaterial);
             isProgressing = false;
+            Destroy(this.gameObject);
         }
     }
 
