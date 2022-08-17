@@ -15,6 +15,8 @@ namespace Pathfinding {
 	[UniqueComponent(tag = "ai.destination")]
 	[HelpURL("http://arongranberg.com/astar/docs/class_pathfinding_1_1_a_i_destination_setter.php")]
 	public class AIDestinationSetter : VersionedMonoBehaviour {
+		
+		
 		/// <summary>The object that the AI should move to</summary>
 		public Transform target;
     	[SerializeField] private List<Transform> endPoints;   //list of leaf nodes
@@ -40,28 +42,29 @@ namespace Pathfinding {
 
 		/// <summary>Updates the AI's destination every frame</summary>
 		void Update () {
-
 			
-			if(firstCall)
+
+			if (firstCall)
 			{
-				endNodeNum = Random.Range(0, 8);
-				//target = endPoints[endNodeNum];
+				endNodeNum = Random.Range(0, endPoints.Count);
+				target = endPoints[endNodeNum];
 				firstCall = false;
 			}
 			else
 			{
 				//Debug.Log("transform.poistion = " + transform.position + "target.poistion = " + target.position);
-				if(Vector3.Distance(transform.position,target.position)<0.5f)
+				if (Vector3.Distance(transform.position, target.position) < 0.5f)
 				{
-					endNodeNum = Random.Range(0, 8);
-					//target = endPoints[endNodeNum];					
+					endNodeNum = Random.Range(0, endPoints.Count);
+					target = endPoints[endNodeNum];
 				}
 			}
-			
-
 
 			if (target != null && ai != null)
+            {
+				//Set destination & move player
 				ai.destination = target.position;
+            }
 		}
 	}
 }

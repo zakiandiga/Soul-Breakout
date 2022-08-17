@@ -16,6 +16,7 @@ namespace Pathfinding {
 	/// </summary>
 	[RequireComponent(typeof(Seeker))]
 	public abstract class AIBase : VersionedMonoBehaviour {
+
 		/// <summary>\copydoc Pathfinding::IAstarAI::radius</summary>
 		public float radius = 0.5f;
 
