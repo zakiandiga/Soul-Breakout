@@ -12,7 +12,7 @@ public class CinemachineBlendMonitor : MonoBehaviour
     public static event Action<CinemachineBlendMonitor> OnCameraBlendStarted;
     public static event Action<CinemachineBlendMonitor> OnCameraBlendFinished;
 
-
+    
 
     private CinemachineBrain cinemachineBrain;
     //[SerializeField] private PostProcessVolume postPro;
@@ -35,15 +35,15 @@ public class CinemachineBlendMonitor : MonoBehaviour
 
     // Start is called before the first frame update
     void Start()
-    {
+    {        
         cinemachineBrain = GetComponent<CinemachineBrain>();
-        //postPro.profile.TryGetSettings(out colorGrading);
-        //uPostPro.TryGetComponent(out colorAdjustment);
+
         volumeProfile = uPostPro.profile;
         volumeProfile.TryGet(out colorAdjustment);
         volumeProfile.TryGet(out chroma);
         volumeProfile.TryGet(out lensDistortion);
 
+        //cinemachineBrain.ActiveVirtualCamera
 
     }
 
@@ -87,6 +87,9 @@ public class CinemachineBlendMonitor : MonoBehaviour
         }
         else if(!blendingOnProgress)
         {
+            if (cinemachineBrain.ActiveVirtualCamera.VirtualCameraGameObject.transform.root.GetComponent<GhostBody>() != null)
+                return;
+
             currentSaturationSmoothValue = colorAdjustment.saturation.value;
             chroma.intensity.value = 0;
 
