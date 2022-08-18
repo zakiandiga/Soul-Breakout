@@ -54,12 +54,7 @@ public class FieldOfViewAI : MonoBehaviour
     }
 
     private IEnumerator FOVRoutine()                        //Calls this routine every 0.2s
-    {
-        //FieldOfViewCheck();
-        Debug.Log("FOVRoutine, playerInRange = " + playerInRange);
-
-        
-
+    {        
         WaitForSeconds wait = new WaitForSeconds(0.3f);
 
         while (true)
@@ -96,7 +91,6 @@ public class FieldOfViewAI : MonoBehaviour
             if (canSeePlayer)
             {
                 canSeePlayer = false;
-                Debug.Log(gameObject.name + ": I CAN'T see player!");
             }
         }
 
@@ -112,7 +106,6 @@ public class FieldOfViewAI : MonoBehaviour
                     if(!canSeePlayer)
                     {
                         canSeePlayer = true;
-                        Debug.Log(gameObject.name + ": I CAN SEE THE PLAYER!");
                     }
                 }
             }
@@ -167,7 +160,6 @@ public class FieldOfViewAI : MonoBehaviour
                 if (target != null)
                 {
                     playerInRange = true;
-                    Debug.Log(gameObject.name + ": PLAYER IS IN RANGE");
                 }
             }
         }

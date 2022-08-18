@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using Cinemachine;
 
 
@@ -101,6 +102,7 @@ namespace ECM.Controllers
 
         private bool possess = false;
         private bool interact = false;
+        private bool backToMenu = false;
 
         public int CharacterCode => characterCode;
 
@@ -257,10 +259,12 @@ namespace ECM.Controllers
 
                 possess = Input.GetKeyDown(KeyCode.E);
 
+
+
             }
 
-            interact = Input.GetKey(KeyCode.T); 
-            
+            interact = Input.GetKey(KeyCode.T);
+            backToMenu = Input.GetKeyDown(KeyCode.F12);
         }
 
         private void Possess()
@@ -408,6 +412,11 @@ namespace ECM.Controllers
             if(IsInteracting && !interact)
             {
                 IsInteracting = false;
+            }
+
+            if(backToMenu)
+            {
+                SceneManager.LoadScene(0);
             }
         }
 
