@@ -442,6 +442,14 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 7897510027900206356, guid: ebcd05d887946be4dbbb1f92f685ac08, type: 3}
+      propertyPath: possessingCooldown
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7897510027900206356, guid: ebcd05d887946be4dbbb1f92f685ac08, type: 3}
+      propertyPath: readyPossessionTimer
+      value: 0.4
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ebcd05d887946be4dbbb1f92f685ac08, type: 3}
 --- !u!1001 &9595482
@@ -14333,8 +14341,16 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7639411891254293905, guid: 80b56532f0fda2a4bbd20f0d417c1ace, type: 3}
+      propertyPath: possessingCooldown
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7639411891254293905, guid: 80b56532f0fda2a4bbd20f0d417c1ace, type: 3}
       propertyPath: possessingDistance
       value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7639411891254293905, guid: 80b56532f0fda2a4bbd20f0d417c1ace, type: 3}
+      propertyPath: readyPossessionTimer
+      value: 0.4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 80b56532f0fda2a4bbd20f0d417c1ace, type: 3}
@@ -39051,8 +39067,16 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8314488376093611767, guid: 50c9be6d2d919024eb1e101486dc49a2, type: 3}
+      propertyPath: possessingCooldown
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8314488376093611767, guid: 50c9be6d2d919024eb1e101486dc49a2, type: 3}
       propertyPath: possessingDistance
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8314488376093611767, guid: 50c9be6d2d919024eb1e101486dc49a2, type: 3}
+      propertyPath: readyPossessionTimer
+      value: 0.4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 50c9be6d2d919024eb1e101486dc49a2, type: 3}
@@ -40176,21 +40200,9 @@ PrefabInstance:
       propertyPath: endPoints.Array.data[7]
       value: 
       objectReference: {fileID: 2104558328}
-    - target: {fileID: 1881231394, guid: 46b0a190be0c06b468b6822f7193de67, type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 2878639764067586126, guid: 46b0a190be0c06b468b6822f7193de67, type: 3}
       propertyPath: m_Name
       value: InitialCharacter
-      objectReference: {fileID: 0}
-    - target: {fileID: 2878639764067586129, guid: 46b0a190be0c06b468b6822f7193de67, type: 3}
-      propertyPath: characterCode
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2878639764067586129, guid: 46b0a190be0c06b468b6822f7193de67, type: 3}
-      propertyPath: noticableCooldown
-      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 2878639764067586135, guid: 46b0a190be0c06b468b6822f7193de67, type: 3}
       propertyPath: m_RootOrder
@@ -40237,12 +40249,12 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2878639764460909978, guid: 46b0a190be0c06b468b6822f7193de67, type: 3}
-      propertyPath: possessingDistance
-      value: 1.5
+      propertyPath: possessingCooldown
+      value: 3
       objectReference: {fileID: 0}
-    - target: {fileID: 5574671974950690547, guid: 46b0a190be0c06b468b6822f7193de67, type: 3}
-      propertyPath: m_IsActive
-      value: 0
+    - target: {fileID: 2878639764460909978, guid: 46b0a190be0c06b468b6822f7193de67, type: 3}
+      propertyPath: readyPossessionTimer
+      value: 0.4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 46b0a190be0c06b468b6822f7193de67, type: 3}
@@ -45963,8 +45975,16 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2306030627231505034, guid: 789fdca91683c394c9a7256042e9900f, type: 3}
+      propertyPath: possessingCooldown
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2306030627231505034, guid: 789fdca91683c394c9a7256042e9900f, type: 3}
       propertyPath: possessingDistance
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2306030627231505034, guid: 789fdca91683c394c9a7256042e9900f, type: 3}
+      propertyPath: readyPossessionTimer
+      value: 0.4
       objectReference: {fileID: 0}
     - target: {fileID: 4101756686342662928, guid: 789fdca91683c394c9a7256042e9900f, type: 3}
       propertyPath: m_IsActive

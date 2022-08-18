@@ -77,7 +77,8 @@ public class FieldOfViewAI : MonoBehaviour
         {
             if (Physics.Raycast(transform.position + (Vector3.up * 1.2f), (target.position - transform.position).normalized, currentDistance, obstructionMask))
             {
-                canSeePlayer = false;
+                if(canSeePlayer)
+                    canSeePlayer = false;
             }
         }
 
