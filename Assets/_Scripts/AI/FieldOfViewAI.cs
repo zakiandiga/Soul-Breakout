@@ -78,6 +78,14 @@ public class FieldOfViewAI : MonoBehaviour
     {
         currentDistance = Vector3.Distance(transform.position, target.position);
 
+        if(canSeePlayer)
+        {
+            if (Physics.Raycast(transform.position + (Vector3.up * 1.2f), (target.position - transform.position).normalized, currentDistance, obstructionMask))
+            {
+                canSeePlayer = false;
+            }
+        }
+
         if(currentDistance > radius || !targetControl.enabled)
         {
             lastPlayerPosition = target.position;
@@ -97,9 +105,9 @@ public class FieldOfViewAI : MonoBehaviour
             Vector3 directionToTarget = (target.position - transform.position).normalized;
 
             if (Vector3.Angle(transform.forward, directionToTarget) < angle / 2)     //if angle btwn (normal & target) < Viewing_angle/2 (=> player is in the FOV)
-            {           
-
-                if (!Physics.Raycast(transform.position + (Vector3.up * 1.59f), directionToTarget, currentDistance, obstructionMask))   //if there is no obstacle btwn player & enemy
+            {
+                Debug.DrawRay(transform.position, directionToTarget, Color.red);
+                if (!Physics.Raycast(transform.position + (Vector3.up * 1.2f), directionToTarget, currentDistance, obstructionMask))   //if there is no obstacle btwn player & enemy
                 {
                     if(!canSeePlayer)
                     {

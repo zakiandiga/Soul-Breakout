@@ -208,8 +208,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   alert: {fileID: 5947204147637547920}
-  chaseRange: 5
-  patrolDistanceTolerance: 2
   possessingDistance: 1.5
   patrolSpeed: 1.5
   chaseSpeed: 3.5
@@ -249,8 +247,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03c15249cde3d7c41ba685fcd8653926, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  radius: 15
-  angle: 135
+  radius: 12
+  angle: 118
   playerRefs: []
   playerRef: {fileID: 0}
   targetMask:

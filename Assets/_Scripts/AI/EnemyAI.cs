@@ -129,8 +129,7 @@ public class EnemyAI : MonoBehaviour
                 Patroling();
                 break;
 
-            case AI_STATE.CHASING:
-                Debug.DrawRay(transform.position, transform.forward * possessingDistance, Color.cyan);
+            case AI_STATE.CHASING:                
                 ChasePlayer();
                 break;
 

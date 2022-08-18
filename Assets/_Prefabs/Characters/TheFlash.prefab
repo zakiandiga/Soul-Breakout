@@ -97,7 +97,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &536224365358357582
 Transform:
   m_ObjectHideFlags: 0
@@ -244,9 +244,9 @@ MonoBehaviour:
   _backwardSpeed: 3
   _strafeSpeed: 4
   _runSpeedMultiplier: 2
-  characterCode: 3
+  characterCode: 4
   ghostBody: {fileID: 3466466367693950434, guid: 8b8a60e45e63b42489824794cccaab42, type: 3}
-  noticableCooldown: 6
+  noticableCooldown: 10
 --- !u!114 &536224365358357583
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -277,9 +277,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   alert: {fileID: 881855133719822112}
-  chaseRange: 5
-  patrolDistanceTolerance: 2
-  possessingDistance: 1
+  possessingDistance: 1.5
   patrolSpeed: 1.5
   chaseSpeed: 3.5
   readyPossessionTimer: 5
@@ -333,8 +331,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03c15249cde3d7c41ba685fcd8653926, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  radius: 15
-  angle: 135
+  radius: 11.4
+  angle: 111
   playerRefs: []
   playerRef: {fileID: 0}
   targetMask:
@@ -856,7 +854,7 @@ AudioSource:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 107711468696415936}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 452a83cc5c598dc4fa60be19a4794aa0, type: 3}
@@ -1012,6 +1010,10 @@ PrefabInstance:
     - target: {fileID: 7897733995920943808, guid: 5773fc1e1807d3c46b8b5fbbb4630365, type: 3}
       propertyPath: m_Name
       value: Alertness
+      objectReference: {fileID: 0}
+    - target: {fileID: 7897733995920943808, guid: 5773fc1e1807d3c46b8b5fbbb4630365, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5773fc1e1807d3c46b8b5fbbb4630365, type: 3}
