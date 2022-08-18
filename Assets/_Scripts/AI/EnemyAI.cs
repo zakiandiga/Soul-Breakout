@@ -26,8 +26,6 @@ public class EnemyAI : MonoBehaviour
     private Animator animator; //Added for animation -Zak
     public GameObject alert;
 
-    [SerializeField] float chaseRange = 5f; //not used in new system (directly use NavMeshAgent StoppingDistance)
-
     [SerializeField] private float possessingDistance = 5f;
     [SerializeField] private float patrolSpeed = 1.5f;
     [SerializeField] private float chaseSpeed = 3.5f;
