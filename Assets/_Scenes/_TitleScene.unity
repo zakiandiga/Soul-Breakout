@@ -14,7 +14,7 @@ OcclusionCullingSettings:
 RenderSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 9
-  m_Fog: 0
+  m_Fog: 1
   m_FogColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   m_FogMode: 3
   m_FogDensity: 0.01
@@ -1312,8 +1312,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 10
-  m_fontSizeBase: 10
+  m_fontSize: 8.5
+  m_fontSizeBase: 8.5
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -1797,8 +1797,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.0012136, y: -0.00097942}
-  m_SizeDelta: {x: 731.94, y: 159.73}
+  m_AnchoredPosition: {x: -0.8, y: -4.5}
+  m_SizeDelta: {x: 638.1089, y: 139.2534}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1270523073
 MonoBehaviour:
@@ -1847,8 +1847,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 63.3
-  m_fontSizeBase: 63.3
+  m_fontSize: 56.19
+  m_fontSizeBase: 56.19
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -2686,7 +2686,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.000025431, y: 142}
+  m_AnchoredPosition: {x: -0.000025431, y: 131.4}
   m_SizeDelta: {x: 658.1439, y: 83.1156}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2013179845
