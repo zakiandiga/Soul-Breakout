@@ -18,7 +18,6 @@ GameObject:
   - component: {fileID: 66496387054547910}
   - component: {fileID: 7897510027900206356}
   - component: {fileID: 7897510028579202832}
-  - component: {fileID: 5100564207546515347}
   - component: {fileID: 1670650777}
   - component: {fileID: 381275435}
   - component: {fileID: 381275436}
@@ -176,7 +175,7 @@ MonoBehaviour:
   _backwardSpeed: 3
   _strafeSpeed: 4
   _runSpeedMultiplier: 2
-  characterCode: 1
+  characterCode: 2
   ghostBody: {fileID: 3466466367693950434, guid: 8b8a60e45e63b42489824794cccaab42, type: 3}
   noticableCooldown: 10
 --- !u!114 &66496387054547910
@@ -211,7 +210,7 @@ MonoBehaviour:
   alert: {fileID: 5947204147637547920}
   chaseRange: 5
   patrolDistanceTolerance: 2
-  possessingDistance: 1
+  possessingDistance: 1.5
   patrolSpeed: 1.5
   chaseSpeed: 3.5
   readyPossessionTimer: 5
@@ -238,21 +237,6 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!114 &5100564207546515347
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 66496387054547934}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eb2336831ccfded4dae86c4328ae9ebf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  wayPoints: []
-  minRemainingDistance: 1.15
-  patrollingSpeed: 1.77
 --- !u!114 &1670650777
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -839,14 +823,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 529b63b3c6d894747b009dcccb171efa, type: 3}
---- !u!1 &836319424639812495 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1435569132439022, guid: 529b63b3c6d894747b009dcccb171efa, type: 3}
-  m_PrefabInstance: {fileID: 837156821324711521}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &832812192854511061 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4666290504453044, guid: 529b63b3c6d894747b009dcccb171efa, type: 3}
+  m_PrefabInstance: {fileID: 837156821324711521}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &836319424639812495 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1435569132439022, guid: 529b63b3c6d894747b009dcccb171efa, type: 3}
   m_PrefabInstance: {fileID: 837156821324711521}
   m_PrefabAsset: {fileID: 0}
 --- !u!82 &660193745
@@ -856,7 +840,7 @@ AudioSource:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 836319424639812495}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 452a83cc5c598dc4fa60be19a4794aa0, type: 3}

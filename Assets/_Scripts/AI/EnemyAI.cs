@@ -28,7 +28,6 @@ public class EnemyAI : MonoBehaviour
 
     [SerializeField] float chaseRange = 5f; //not used in new system (directly use NavMeshAgent StoppingDistance)
 
-    [SerializeField] private float patrolDistanceTolerance = 2f; //previously minRemainingDistance
     [SerializeField] private float possessingDistance = 5f;
     [SerializeField] private float patrolSpeed = 1.5f;
     [SerializeField] private float chaseSpeed = 3.5f;
@@ -74,6 +73,12 @@ public class EnemyAI : MonoBehaviour
 
     private void OnEnable()
     {
+        if(fieldOfViewAI != null)
+        {
+            if (!fieldOfViewAI.enabled)
+                fieldOfViewAI.enabled = true;
+        }
+
         AI_State = AI_STATE.IDLE;
     }
 
@@ -109,6 +114,9 @@ public class EnemyAI : MonoBehaviour
 
         if (pathfindingAI.enabled)
             pathfindingAI.enabled = false;
+
+        if (fieldOfViewAI.enabled)
+            fieldOfViewAI.enabled = false;
     }
 
     private void StateMachine()
@@ -242,8 +250,10 @@ public class EnemyAI : MonoBehaviour
         //EXIT to IDLE
         if (CurrentPlayer == null || !CanSeePlayer)
         {
-            if (readyingPossess != null)
+            if (readyingPossess != null)              
                 StopCoroutine(readyingPossess);
+
+            readyToPossess = false;
 
             navMeshAgent.ResetPath();
             isIdling = true;
@@ -263,6 +273,8 @@ public class EnemyAI : MonoBehaviour
         {
             if (readyingPossess != null)
                 StopCoroutine(readyingPossess);
+
+            readyToPossess = false;
 
             navMeshAgent.ResetPath();
             decidingPossess = true;
@@ -303,7 +315,6 @@ public class EnemyAI : MonoBehaviour
 
     private IEnumerator ReadyingPossession()
     {
-        Debug.Log("Readying possession!");
         yield return new WaitForSeconds(readyPossessionTimer);
         Debug.Log("I'M READY TO POSSESS");
         readyToPossess = true;

@@ -76,7 +76,6 @@ public class FieldOfViewAI : MonoBehaviour
 
     private void VisionCheck()
     {
-        //Debug.Log("VisionCheck");
         currentDistance = Vector3.Distance(transform.position, target.position);
 
         if(currentDistance > radius || !targetControl.enabled)
@@ -87,7 +86,10 @@ public class FieldOfViewAI : MonoBehaviour
             playerInRange = false;
 
             if (canSeePlayer)
+            {
                 canSeePlayer = false;
+                Debug.Log(gameObject.name + ": I CAN'T see player!");
+            }
         }
 
         else if(currentDistance <= radius && targetControl.PlayerNoticable)
@@ -100,7 +102,10 @@ public class FieldOfViewAI : MonoBehaviour
                 if (!Physics.Raycast(transform.position + (Vector3.up * 1.59f), directionToTarget, currentDistance, obstructionMask))   //if there is no obstacle btwn player & enemy
                 {
                     if(!canSeePlayer)
+                    {
                         canSeePlayer = true;
+                        Debug.Log(gameObject.name + ": I CAN SEE THE PLAYER!");
+                    }
                 }
             }
         }
@@ -152,7 +157,10 @@ public class FieldOfViewAI : MonoBehaviour
                 }
 
                 if (target != null)
+                {
                     playerInRange = true;
+                    Debug.Log(gameObject.name + ": PLAYER IS IN RANGE");
+                }
             }
         }
     }

@@ -43,7 +43,6 @@ public class TaskFill : Interactable
         sprite.GetComponent<MeshRenderer>().material = currentMaterial;
         UpdateMaterial(0);
         signText = sign.GetComponentInChildren<TextMeshProUGUI>();
-        Debug.Log(currentMaterial);
     }
 
     protected override void StartInteract()
@@ -130,8 +129,6 @@ public class TaskFill : Interactable
 
     private void UpdateMaterial(int characterCode)
     {
-        Debug.Log("character code: " + characterCode);
-
         if(blockCharacterCode == characterCode && !taskFinished)
         {
             currentMaterial = glowMaterial;
