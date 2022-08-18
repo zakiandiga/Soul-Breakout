@@ -4,5 +4,11 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/_Scenes/_TitleScene.unity
+    guid: 707ca5384091fa848bd77fd9b5b5760a
+  - enabled: 1
+    path: Assets/_Scenes/newZakPathfinding.unity
+    guid: 23c6b7db9eadd594ba2a81fa8db4c3a3
   m_configObjects: {}

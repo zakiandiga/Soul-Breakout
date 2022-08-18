@@ -451,8 +451,16 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7897510027900206356, guid: ebcd05d887946be4dbbb1f92f685ac08, type: 3}
+      propertyPath: chaseRange
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7897510027900206356, guid: ebcd05d887946be4dbbb1f92f685ac08, type: 3}
       propertyPath: possessingDistance
       value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7897510027900206356, guid: ebcd05d887946be4dbbb1f92f685ac08, type: 3}
+      propertyPath: readyPossessionTimer
+      value: 7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ebcd05d887946be4dbbb1f92f685ac08, type: 3}
@@ -14253,8 +14261,16 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7639411891254293905, guid: 80b56532f0fda2a4bbd20f0d417c1ace, type: 3}
+      propertyPath: chaseRange
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7639411891254293905, guid: 80b56532f0fda2a4bbd20f0d417c1ace, type: 3}
       propertyPath: possessingDistance
       value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7639411891254293905, guid: 80b56532f0fda2a4bbd20f0d417c1ace, type: 3}
+      propertyPath: readyPossessionTimer
+      value: 7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 80b56532f0fda2a4bbd20f0d417c1ace, type: 3}
@@ -38523,8 +38539,16 @@ PrefabInstance:
       value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 8314488376093611767, guid: 50c9be6d2d919024eb1e101486dc49a2, type: 3}
+      propertyPath: chaseRange
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 8314488376093611767, guid: 50c9be6d2d919024eb1e101486dc49a2, type: 3}
       propertyPath: possessingDistance
       value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8314488376093611767, guid: 50c9be6d2d919024eb1e101486dc49a2, type: 3}
+      propertyPath: readyPossessionTimer
+      value: 7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 50c9be6d2d919024eb1e101486dc49a2, type: 3}
@@ -39705,8 +39729,16 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2878639764460909978, guid: 46b0a190be0c06b468b6822f7193de67, type: 3}
+      propertyPath: chaseRange
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 2878639764460909978, guid: 46b0a190be0c06b468b6822f7193de67, type: 3}
       propertyPath: possessingDistance
       value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2878639764460909978, guid: 46b0a190be0c06b468b6822f7193de67, type: 3}
+      propertyPath: readyPossessionTimer
+      value: 7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 46b0a190be0c06b468b6822f7193de67, type: 3}
@@ -45383,8 +45415,16 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2306030627231505034, guid: 789fdca91683c394c9a7256042e9900f, type: 3}
+      propertyPath: chaseRange
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 2306030627231505034, guid: 789fdca91683c394c9a7256042e9900f, type: 3}
       propertyPath: possessingDistance
       value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2306030627231505034, guid: 789fdca91683c394c9a7256042e9900f, type: 3}
+      propertyPath: readyPossessionTimer
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 5581370854719320167, guid: 789fdca91683c394c9a7256042e9900f, type: 3}
       propertyPath: m_Name
