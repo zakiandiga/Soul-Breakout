@@ -3,8 +3,7 @@
 ### :joystick: Demo : 
 
 <a href="http://www.youtube.com/watch?feature=player_embedded&v=8Mj78w2EC54
-" target="_blank"><img src="https://i.ytimg.com/an_webp/8Mj78w2EC54/mqdefault_6s.webp?du=3000&sqp=COiY_ZkG&rs=AOn4CLC5S0yBniWywLtuy_lavNo7ieS7Dg" 
-alt="SoulBreakout demo" /></a>
+" target="_blank"><img src="https://github.com/vbobus/game-screenshots/blob/main/Soul_Breakout_Demo%20(1).gif" /></a>
 
 ---
 
