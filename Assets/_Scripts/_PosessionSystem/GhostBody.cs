@@ -6,22 +6,20 @@ using ECM.Controllers;
 
 public class GhostBody : MonoBehaviour
 {
-    private FirstPersonCinemachine control;
+    private ModifiedECMController control;
     private CinemachineVirtualCamera virtualCam;
 
     public static event Action<GhostBody> OnGhostBodyReady; 
 
     private IEnumerator Start()
     {
-        control = GetComponent<FirstPersonCinemachine>();
+        control = GetComponent<ModifiedECMController>();
         virtualCam = GetComponentInChildren<CinemachineVirtualCamera>();
         
         yield return new WaitForSeconds(1.2f);
 
         OnGhostBodyReady?.Invoke(this);
-        virtualCam.Priority = 10;
-
-        
+        virtualCam.Priority = 10;        
     }
 
     

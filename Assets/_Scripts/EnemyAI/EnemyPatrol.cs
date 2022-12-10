@@ -13,19 +13,12 @@ public class EnemyPatrol : MonoBehaviour
     [SerializeField] private float patrollingSpeed = 1.5f;
     private int totalDestinationPoint;
     private int currentDestinationPoint = 0;
-    //private NavMeshAgent agent;
 
     private float idleTime;
     private bool onDelay = false;
 
-    // Start is called before the first frame update
     void Start()
     {
-        //agent = GetComponent<NavMeshAgent>();
-        //agent.autoBraking = false;
-
-        //GoToNextPoint();      
-
         totalDestinationPoint = wayPoints.Count;
     }
 
@@ -39,14 +32,7 @@ public class EnemyPatrol : MonoBehaviour
             return;
         }
 
-        //agent.destination = wayPoints[totalDestinationPoint].position;
-
-       // Debug.Log("navmeshAGENT DESTINATION " + agent.destination);
-
-
-
-        totalDestinationPoint = (totalDestinationPoint+1) % wayPoints.Count;  //looping through iterator
-
+        totalDestinationPoint = (totalDestinationPoint+1) % wayPoints.Count; 
     }
 
     public Vector3 GetWayPoint()
@@ -55,8 +41,7 @@ public class EnemyPatrol : MonoBehaviour
         {
             Debug.LogError("No way point set");
             return transform.position;
-        }
-        
+        }        
 
         if (currentDestinationPoint == totalDestinationPoint)
             currentDestinationPoint = 0;

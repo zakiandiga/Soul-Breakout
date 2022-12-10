@@ -15,12 +15,12 @@ public class FieldOfViewAI : MonoBehaviour
     [Range(0,360)] public float angle;
 
     private Transform target;
-    private FirstPersonCinemachine targetControl;
+    private ModifiedECMController targetControl;
 
     [HideInInspector] public GameObject[] playerRefs;
     [HideInInspector] public GameObject playerRef;
 
-    private List<FirstPersonCinemachine> potentialTargets = new List<FirstPersonCinemachine>();
+    private List<ModifiedECMController> potentialTargets = new List<ModifiedECMController>();
     private bool playerInRange = false;
     private float currentDistance;
     private Vector3 lastPlayerPosition; //the point where the player leave the field of view
@@ -38,7 +38,7 @@ public class FieldOfViewAI : MonoBehaviour
         for(int i=0;i<playerRefs.Length;i++)
         {
         // Debug.Log("object name" + playerRefs[i].name);
-            if(playerRefs[i].GetComponent<FirstPersonCinemachine>().enabled==true)
+            if(playerRefs[i].GetComponent<ModifiedECMController>().enabled==true)
             {
                 playerRef = playerRefs[i];
             }
@@ -138,7 +138,7 @@ public class FieldOfViewAI : MonoBehaviour
         {
             for (int i = 0; i < collidedCharacters.Length; ++i)
             {
-                potentialTargets.Add(collidedCharacters[i].GetComponent<FirstPersonCinemachine>());
+                potentialTargets.Add(collidedCharacters[i].GetComponent<ModifiedECMController>());
             }
 
             if (potentialTargets.Count <= 0)
@@ -147,12 +147,12 @@ public class FieldOfViewAI : MonoBehaviour
 
             else if (potentialTargets.Count > 0)
             {
-                foreach (FirstPersonCinemachine targetToChoose in potentialTargets)
+                foreach (ModifiedECMController targetToChoose in potentialTargets)
                 {
                     if (targetToChoose.enabled && (target != targetToChoose.transform || target == null))
                     {
                         target = targetToChoose.transform;
-                        targetControl = target.GetComponent<FirstPersonCinemachine>();
+                        targetControl = target.GetComponent<ModifiedECMController>();
                     }
           
 
@@ -174,7 +174,7 @@ public class FieldOfViewAI : MonoBehaviour
         {
             for(int i=0; i<rangeChecks.Length; i++)
             {
-                if(rangeChecks[i].GetComponent<FirstPersonCinemachine>().enabled==true)     //if the character with FPC enabled (aka the player)
+                if(rangeChecks[i].GetComponent<ModifiedECMController>().enabled==true)     //if the character with FPC enabled (aka the player)
                 {
                     Debug.Log("player is" + rangeChecks[i].name);
                     target = rangeChecks[i].transform;

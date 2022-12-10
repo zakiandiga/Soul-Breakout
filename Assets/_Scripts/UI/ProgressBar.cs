@@ -22,38 +22,41 @@ public class ProgressBar : MonoBehaviour
 
     private void Update()
     {
-
-        if(taskFill.IsProgressing)
+        if (!taskFill.IsProgressing)
         {
-            if(!text.gameObject.activeSelf)
-                text.gameObject.SetActive(true);
-
-            if (!slider.gameObject.activeSelf)
-                slider.gameObject.SetActive(true);
-
-            if (!taskFill.TaskFinished)
-            {
-                var progInt = (int)taskFill.CurrentProgress;
-                text.text = progInt.ToString() + " / " + taskFill.MaxProgress.ToString();
-                slider.value = taskFill.CurrentProgress;
-            }
-
-            else
-            {
-                text.text = "COMPLETED";
-            }
+            HideTaskWidget();
+            return;
         }
 
-        else if(!taskFill.IsProgressing)
+        ShowTaskWidget();
+
+        if (taskFill.TaskFinished)
         {
-            if (text.gameObject.activeSelf)
-                text.gameObject.SetActive(false);
-
-            if (slider.gameObject.activeSelf)
-                slider.gameObject.SetActive(false);
+            text.text = "COMPLETED!";
+            return;
         }
+            
+        var progInt = (int)taskFill.CurrentProgress;
+        text.text = progInt.ToString() + " / " + taskFill.MaxProgress.ToString();
+        slider.value = taskFill.CurrentProgress;
+    }
 
+    private void ShowTaskWidget()
+    {
+        if (text.gameObject.activeSelf && slider.gameObject.activeSelf)
+            return;
 
+        text.gameObject.SetActive(true);
+        slider.gameObject.SetActive(true);
+    }
+
+    private void HideTaskWidget()
+    {
+        if (!text.gameObject.activeSelf && !slider.gameObject.activeSelf)
+            return;
+
+        text.gameObject.SetActive(false);
+        slider.gameObject.SetActive(false);
     }
 
 }

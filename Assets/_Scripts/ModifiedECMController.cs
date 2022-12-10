@@ -7,7 +7,7 @@ using Cinemachine;
 
 namespace ECM.Controllers
 {
-    public class FirstPersonCinemachine : BaseCharacterController
+    public class ModifiedECMController : BaseCharacterController
     {
         #region EDITOR EXPOSED FIELDS
 
@@ -132,17 +132,13 @@ namespace ECM.Controllers
             if (animator == null)
                 return;
 
-            if(moveDirection != Vector3.zero)
-            {
-                animator.SetFloat("MoveSpeed", moveSpeed);
-
-
-            }
-            else
+            if(moveDirection == Vector3.zero)
             {
                 animator.SetFloat("MoveSpeed", 0);
-
-            }
+                return;
+            }           
+            
+            animator.SetFloat("MoveSpeed", moveSpeed);                      
         }
 
         /// <summary>

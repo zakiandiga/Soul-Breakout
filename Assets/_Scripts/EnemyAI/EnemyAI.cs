@@ -8,22 +8,17 @@ using Pathfinding;
 
 public class EnemyAI : MonoBehaviour
 {
-    //PROPERTIES
-    //Added the property mainly for animation -Zak
     public float CurrentMoveSpeed => navMeshAgent.enabled ? navMeshAgent.velocity.magnitude :  pathfindingAI.desiredVelocity.magnitude;
     public NavMeshAgent NavMeshAgent => navMeshAgent;
     public float NavMeshSpeed => navMeshAgent.enabled ? navMeshAgent.velocity.magnitude : 0;
     public bool CanSeePlayer => fieldOfViewAI.CanSeePlayer;
     public Transform CurrentPlayer => fieldOfViewAI.CurrentPlayer;
 
-
-    //public AIManager aIManager;
     private Rigidbody rigidBody;
-    private FieldOfViewAI fieldOfViewAI; //Changed this to private
-
+    private FieldOfViewAI fieldOfViewAI; 
     private NavMeshAgent navMeshAgent;
     private AIPath pathfindingAI;
-    private Animator animator; //Added for animation -Zak
+    private Animator animator; 
     public GameObject alert;
 
     [SerializeField] private float possessingDistance = 5f;
@@ -34,7 +29,7 @@ public class EnemyAI : MonoBehaviour
 
     private bool isIdling = false;
     private bool readyToPossess = false;
-    private bool decidingPossess = false; //temp variable
+    private bool decidingPossess = false; 
     private bool possessOnCooldown = false;
 
     public event Action<bool> OnAITryPosses;
@@ -52,9 +47,7 @@ public class EnemyAI : MonoBehaviour
         CHASING,
         POSSESS,
     }
-
-    #region MonoBehaviour Loops
-    // Start is called before the first frame update
+    
     private void Start()
     {
         rigidBody = GetComponent<Rigidbody>();
@@ -87,8 +80,7 @@ public class EnemyAI : MonoBehaviour
 
     private void Update()
     {
-        //Debug.Log(AI_State);
-        //Added this line for animation -Zak
+
         Animate();
         StateMachine();
 
@@ -102,8 +94,6 @@ public class EnemyAI : MonoBehaviour
             alert.SetActive(false);
         }
     }
-    #endregion
-
 
     private void DisablingAIComponent()
     {
@@ -373,10 +363,10 @@ public class EnemyAI : MonoBehaviour
         {
             
             animator.SetFloat("MoveSpeed", CurrentMoveSpeed);
+            return;
         }
-        else
-        {
-            animator.SetFloat("MoveSpeed", 0);
-        }
+       
+        animator.SetFloat("MoveSpeed", 0);
+        
     }
 }
