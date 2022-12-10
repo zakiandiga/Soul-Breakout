@@ -20,7 +20,7 @@ public class FieldOfViewEditor : Editor
         Handles.DrawLine(fov.transform.position, fov.transform.position + viewAngle01 * fov.radius);
         Handles.DrawLine(fov.transform.position, fov.transform.position + viewAngle02 * fov.radius);
 
-        if(fov.canSeePlayer)
+        if(fov.CanSeePlayer)
         {
             Handles.color=Color.green;
             Handles.DrawLine(fov.transform.position, fov.playerRef.transform.position);
@@ -36,15 +36,4 @@ public class FieldOfViewEditor : Editor
 
     }
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

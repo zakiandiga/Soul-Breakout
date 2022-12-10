@@ -1655,7 +1655,7 @@ namespace ECM.Components
                 return;
             }
             
-            cachedRigidbody.useGravity = false;
+            //cachedRigidbody.useGravity = false;
             cachedRigidbody.isKinematic = false;
             cachedRigidbody.freezeRotation = true;
 
