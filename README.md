@@ -26,3 +26,7 @@ alt="SoulBreakout demo" /></a>
 <img src="https://github.com/vbobus/game-screenshots/blob/main/Screenshot%20(43).png" width="45%"></img>
 <img src="https://github.com/vbobus/game-screenshots/blob/main/Screenshot%20(51).png" width="45%"></img>
 <img src="https://github.com/vbobus/game-screenshots/blob/main/Screenshot%20(53).png" width="45%"></img>
+
+### :wrench: Core Mechanic: 
+
+<img src="https://github.com/vbobus/game-screenshots/blob/main/Possession%20mechanic.jpeg" width="45%"></img>
